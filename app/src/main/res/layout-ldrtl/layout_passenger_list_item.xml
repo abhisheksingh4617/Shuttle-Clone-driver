@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/layPassengerItem"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/spacing_small"
+    android:background="@drawable/border"
+    android:gravity="center"
+    android:clickable="true"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvPassengerName"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/spacing_small"
+        android:layout_weight="0.1"
+        android:drawableRight="@drawable/ic_baseline_phone_24"
+        android:drawablePadding="@dimen/spacing_small"
+        android:drawableTint="@color/colorPrimaryDark"
+        android:fontFamily="@font/googlesansbold"
+        android:gravity="center|right"
+        android:layout_gravity="center"
+        android:padding="@dimen/spacing_medium"
+        android:text="Ram (25)"
+        android:textColor="@color/textheader"
+        android:textSize="@dimen/font_large" />
+
+    <TextView
+        android:id="@+id/tvSeatNo"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/spacing_small"
+        android:drawableLeft="@drawable/ic_bus_seat"
+        android:drawableTint="@color/colorPrimaryDark"
+        android:fontFamily="@font/googlesansbold"
+        android:gravity="center|right"
+        android:padding="@dimen/spacing_small"
+        android:text="D5"
+        android:textColor="@color/textheader"
+        android:textSize="@dimen/font_large" />
+
+
+    <ImageView
+        android:id="@+id/imgPassengerInOutStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_margin="1dp"
+        android:padding="@dimen/_8sdp"
+        android:src="@drawable/ic_seater"
+        app:tint="@color/colorPrimaryDark"/>
+
+    <ImageView
+        android:id="@+id/imgPassengerStatus"
+        app:tint="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_margin="1dp"
+        android:background="@color/dark_gray"
+        android:padding="@dimen/_8sdp"
+        android:src="@drawable/ic_baseline_check_24" />
+
+
+</LinearLayout>
+
+

@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height"
+        android:background="@drawable/bg_toolbar" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_toolbar"
+        android:theme="@style/Toolbar"
+        app:contentInsetStart="0dp"
+        app:titleTextColor="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/spacing_medium"
+                android:src="@drawable/ic_left_arrow_white" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_toEndOf="@+id/ivBack"
+                android:fontFamily="@font/googlesansextrabold"
+                android:text="@string/lbl_start_ride"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_mlarge" />
+
+            <include layout="@layout/layout_addnotification" />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/rlCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="@drawable/bg_card"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:weightSum="1">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_medium"
+                android:background="@color/white"
+                app:cardCornerRadius="@dimen/spacing_small"
+                app:cardElevation="@dimen/card_shadow">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_10sdp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvTripStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/googlesansbold"
+                        android:text="@string/active_schedule"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/font_large" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_seater"
+                                android:drawableTint="@color/colorPrimaryDark"
+                                android:drawablePadding="@dimen/_2sdp"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/text_totalseat"
+                                android:textColor="@color/textcolor"
+                                android:textSize="@dimen/font_medium" />
+
+                            <TextView
+                                android:id="@+id/tvTotalSeats"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/googlesansbold"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="325"
+                                android:textColor="@color/textheader"
+                                android:textSize="@dimen/font_large" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:background="@color/view_header" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_baseline_people_alt_24"
+                                android:drawableTint="@color/colorPrimaryDark"
+                                android:drawablePadding="@dimen/_2sdp"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/llb_passenger"
+                                android:textColor="@color/textcolor"
+                                android:textSize="@dimen/font_medium" />
+
+                            <TextView
+                                android:id="@+id/tvPassengers"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/googlesansbold"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="35"
+                                android:textColor="@color/textheader"
+                                android:textSize="@dimen/font_large" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:visibility="gone"
+                            android:background="@color/view_header" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@drawable/ic_baseline_access_time_filled_24"
+                                android:drawablePadding="@dimen/_2sdp"
+                                android:ellipsize="end"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:text="@string/current_time"
+                                android:textColor="@color/textcolor"
+                                android:textSize="@dimen/font_medium" />
+
+                            <TextView
+                                android:id="@+id/tvCurrentTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/googlesansbold"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:padding="@dimen/_3sdp"
+                                android:text="08:30 AM"
+                                android:textColor="@color/textheader"
+                                android:textSize="@dimen/font_large" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@color/white"
+                        android:gravity="center|left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_dote"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/colorPrimaryDark"
+                            android:fontFamily="@font/googlesansbold"
+                            android:text="@string/start_at"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:id="@+id/tvStartAt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="09:30 AM-Noida Sec 18"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@color/white"
+                        android:gravity="center|left"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_dote"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/red"
+                            android:fontFamily="@font/googlesansbold"
+                            android:text="@string/end_at"
+                            android:ems="5"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:id="@+id/tvEndAt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="09:30 AM-Noida Sec 18"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+
+                    </LinearLayout>
+
+                    <com.ncorti.slidetoact.SlideToActView
+                        android:id="@+id/btnStartRide"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:text="@string/txt_start_ride"
+                        app:outer_color="@color/color_check"
+                        app:slider_height="@dimen/_45sdp"
+                        app:icon_margin="1dp"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:text_size="@dimen/font_mlarge"/>
+
+                    <com.ncorti.slidetoact.SlideToActView
+                        android:id="@+id/btnFinishRide"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:text="@string/txt_finish_ride"
+                        app:outer_color="@color/red"
+                        app:slider_height="@dimen/_45sdp"
+                        app:icon_margin="1dp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:text_size="@dimen/font_mlarge"
+                        android:visibility="gone"/>
+
+                    <Button
+                        android:id="@+id/btnNavigateRide"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:drawableRight="@drawable/ic_navigate_24"
+                        android:drawableLeft="@drawable/ic_baseline_location_on_24"
+                        android:background="@drawable/circle_btn_gradient"
+                        android:backgroundTint="@color/colorAccent"
+                        android:text="@string/navigate_ride"
+                        android:textAllCaps="false"
+                        android:visibility="gone"
+                        android:fontFamily="sans-serif-condensed-light"
+                        android:textSize="@dimen/font_mlarge"
+                        android:textColor="@color/white" />
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvBusRoutes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_xsmall"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="@dimen/card_shadow">
+
+                <TextView
+                    android:id="@+id/lblContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_small"
+                    android:fontFamily="@font/googlesansbold"
+                    android:padding="@dimen/spacing_small"
+                    android:text="@string/title_stops"
+                    android:textColor="@color/textheader"
+                    android:textSize="@dimen/font_large" />
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBusStops"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_card"
+                tools:listitem="@layout/layout_bus_stops_info" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <com.nhaarman.supertooltips.ToolTipRelativeLayout
+        android:id="@+id/tooltipView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabScanTicket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/_15sdp"
+        android:clickable="true"
+        android:elevation="@dimen/_8sdp"
+        android:src="@drawable/ic_scan_24"
+        android:tint="@color/white" />
+
+</RelativeLayout>

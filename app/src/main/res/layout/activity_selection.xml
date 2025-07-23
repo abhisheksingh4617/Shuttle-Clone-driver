@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/root_layout"
+    android:paddingStart="@dimen/spacing_large"
+    android:paddingEnd="@dimen/spacing_large">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/googlesansbold"
+                android:text="@string/text_you_want_to"
+                android:textColor="@color/textchild"
+                android:textSize="@dimen/font_xlarge" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/googlesansextrabold"
+                android:text="@string/app_name"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/font_xxxlarge" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_img__height"
+                android:paddingTop="@dimen/spacing_large"
+                android:src="@drawable/ic_travel" />
+
+
+            <Button
+                android:id="@+id/btnContinue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/bg_btn_shape"
+                android:fontFamily="@font/googlesansbold"
+                android:shadowColor="@color/blue"
+                android:text="@string/start_with_phone_no"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_mlarge"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tvCl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:fontFamily="@font/googlesansbold"
+                    android:text="@string/text_change_language"
+                    android:textColor="@color/textheader"
+                    android:textSize="@dimen/font_large" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/viewheight"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_large"
+                    android:layout_toStartOf="@+id/spChangeLanguage"
+                    android:layout_toEndOf="@+id/tvCl"
+                    android:background="@color/view_color" />
+
+                <Spinner
+                    android:id="@+id/spChangeLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/googlesansbold"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/font_large" />
+
+                <TextView
+                    android:id="@+id/tvChangeLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:fontFamily="@font/googlesansbold"
+                    android:text="@string/lbl_language"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/font_large"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

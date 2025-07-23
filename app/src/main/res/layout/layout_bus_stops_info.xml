@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cvBusStops"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/spacing_medium"
+    android:background="@color/white"
+    app:cardCornerRadius="@dimen/spacing_small"
+    app:cardElevation="@dimen/card_shadow"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_small"
+            android:layout_weight="0.2"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tvStopName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:layout_marginTop="@dimen/spacing_xsmall"
+                android:drawableLeft="@drawable/ic_baseline_location_on_24"
+                android:drawablePadding="@dimen/spacing_small"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/googlesansregular"
+                android:padding="@dimen/spacing_small"
+                android:hint="@string/text_nextstop"
+                android:textColor="@color/textheader"
+                android:textSize="@dimen/font_large" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_10sdp" />
+
+            <TextView
+                android:id="@+id/tvStopTiming"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_baseline_access_time_filled_24"
+                android:drawablePadding="@dimen/spacing_small"
+                android:drawableTint="@color/colorPrimaryDark"
+                android:fontFamily="@font/googlesansbold"
+                android:gravity="center_vertical"
+                android:padding="@dimen/spacing_small"
+                android:singleLine="true"
+                android:hint="00:00 AM"
+                android:textColor="@color/textheader"
+                android:textSize="@dimen/font_large" />
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:background="@color/colorPrimaryDark">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:layout_marginTop="@dimen/spacing_xsmall"
+                android:fontFamily="@font/googlesansregular"
+                android:padding="@dimen/spacing_small"
+                android:text="IN"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:layout_marginTop="@dimen/spacing_xsmall"
+                android:fontFamily="@font/googlesansregular"
+                android:padding="@dimen/spacing_small"
+                android:layout_alignParentEnd="true"
+                android:text="OUT"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large" />
+
+            <TextView
+                android:id="@+id/tvNoOfPassenger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center"
+                android:drawableBottom="@drawable/ic_seater"
+                android:drawableTint="@color/white"
+                android:fontFamily="@font/googlesansregular"
+                android:padding="@dimen/spacing_small"
+                android:text="0"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large" />
+            <TextView
+                android:id="@+id/tvNoOfOutPassenger"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
+                android:drawableBottom="@drawable/ic_bus_stop"
+                android:drawableTint="@color/white"
+                android:fontFamily="@font/googlesansregular"
+                android:padding="@dimen/spacing_small"
+                android:text="0"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_large" />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

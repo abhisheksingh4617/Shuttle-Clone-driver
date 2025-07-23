@@ -1,0 +1,154 @@
+<resources>
+    <string name="txt_term_and_policy"><![CDATA[<p>من خلال الاستمرار، فإنك توافق على لدينا <a href=\"https://demoshuttle.ridein.in/#/terms\">شروط الخدمة</a> <a href=\"https://demoshuttle.ridein.in/#/privacy-policy\">سياسة الخصوصية</a><p>]]></string>
+
+    <string name="lbl_bus_routes">خطوط الحافلات</string>
+    <string name="title_passenger_list">قائمة الركاب</string>
+    <string name="title_stopes_details">تفاصيل التوقف</string>
+    <string name="hint_enter_your_contact_number">أدخل رقم الاتصال</string>
+    <string name="lbl_email">بريد إلكتروني :</string>
+    <string name="title_language_setting">اعدادات اللغة</string>
+    <string name="lbl_language">لغة :</string>
+    <string name="txt_english_us">الإنجليزية-الولايات المتحدة</string>
+    <string name="lbl_first_name">الاسم الأول :</string>
+    <string name="lbl_last_name">اسم العائلة :</string>
+    <string name="lbl_gender">نوع :</string>
+
+    <string name="start_with_phone_no">ابدأ برقم الهاتف</string>
+    <string name="lbl_help_support">مساعدة و دعم</string>
+    <string name="hint_enter_your_emailid">ادخل البريد الالكتروني</string>
+    <string name="msg_email_valid">أدخل بريدًا إلكترونيًا صالحًا</string>
+    <string name="msg_valid_mobile_number">ادخل رقم هاتف خلوي ساري المفعول</string>
+    <string name="msg_mobile_number">رقم الجوال مطلوب</string>
+    <string name="msg_description">الوصف مطلوب</string>
+
+    <string name="hint_email">أدخل البريد الإلكتروني</string>
+    <string name="lbl_notification">الاشعارات</string>
+    <string name="lbl_verification">أدخل رمز التحقق الخاص بك: لقد أرسلنا لك للتو رقم هاتفك المحمول</string>
+    <string name="txt_verify">تاكيد</string>
+    <string name="txt_Resend">إعادة إرسال</string>
+    <string name="text_you_want_to">مرحبا بك في</string>
+    <string name="hint_mobile">أدخل رقم الهاتف </string>
+    <string name="lbl_continue">استمرار</string>
+    <string name="text_signinwith">تسجيل الدخول ب</string>
+    <string name="verification">تَحَقّق</string>
+    <string name="profile_settings">حساب تعريفي</string>
+    <string name="lbl_help">يساعد</string>
+    <string name="lbl_submit">تأكيد</string>
+    <string name="home">الصفحة الرئيسية</string>
+    <string name="text_phone">هاتف :</string>
+    <string name="hint_enter_first_name">أدخل الاسم الأول</string>
+    <string name="hint_enter_last_name">إدخال اسم العائلة</string>
+    <string name="text_save">يحفظ</string>
+    <string name="msg_code">الكود مطلوب</string>
+    <string name="text_description">وصف</string>
+    <string name="text_logout">تسجيل خروج</string>
+    <string name="msg_logout">هل أنت متأكد أنك تريد تسجيل الخروج؟</string>
+    <string name="text_yes">نعم</string>
+    <string name="text_no">لا</string>
+    <string name="text_totalseat">إجمالي المقعد:</string>
+    <string name="text_seat_no">رقم المقعد</string>
+    <string name="text_settings">إعدادات</string>
+
+    <string name="text_close">غلق</string>
+    <string name="text_version">إصدار :</string>
+    <string name="letsgo">دعنا نذهب</string>
+    <string name="lbl_todays_sch">جدول اليوم</string>
+    <string name="lbl_start_ride">تفاصيل الرحلة الحالية</string>
+    <string name="lbl_passenger_list">قائمة الركاب</string>
+    <string name="title_your_name">اسمك</string>
+    <string name="title_your_contact">جهة الاتصال الخاصة بك</string>
+    <string name="title_note">ملحوظة:- في حالة التعديل و تحديث رقم الجوال اتصل بالمالك.</string>
+    <string name="hint_gender">نوع</string>
+
+    <string name="lbl_profile">حساب تعريفي</string>
+    <string name="something_wrong">يرجى المحاولة مرة أخرى، حدث خطأ ما.</string>
+    <string name="lbl_allow">سماح</string>
+    <string name="lbl_no_trips_available">لا توجد رحلات متاحة</string>
+    <string name="title_stops">محطات الحافلات</string>
+    <string name="lbl_no_passenger">لا يوجد راكب في هذه المحطة</string>
+    <string name="lbl_close">غلق</string>
+
+    <string name="background_permission_denied_explanation">تم رفض إذن تحديد الموقع في الخلفية ولكنه مطلوب لتحسين وظائف التطبيق.</string>
+    <string name="background_location_permission_rationale">هناك حاجة إلى إذن الموقع في الخلفية لتحسين وظائف التطبيق.</string>
+    <string name="settings">إعدادات</string>
+    <string name="fine_location_permission_rationale">اعطاء صلاحيات للموقع الدقيق و الوظائف الاساسية</string>
+    <string name="fine_permission_denied_explanation">تم رفض إذن الموقع الدقيق، ولكنه مطلوب للوظائف الأساسية.</string>
+
+    <string name="ok">نعم</string>
+    <string name="txt_start_ride">ابدأ الرحلة</string>
+    <string name="txt_finish_ride">إنهاء الرحلة</string>
+    <string name="offline">غير متصل على الانترنت</string>
+    <string name="online">متصل</string>
+    <string name="pls_wait_loading">الرجاء الانتظار جاري التحميل...</string>
+    <string name="txt_alert">تحذير!!</string>
+    <string name="msg_driver_offline_alert">لا يمكنك عدم الاتصال بالإنترنت عندما يكون لديك حجز معين.</string>
+    <string name="driver_offline_trip_start_alert">"لا يمكنك بدء الرحلة عندما تكون غير متصل بالإنترنت. يرجى العودة إلى الشاشة الرئيسية، وضبط اتصالك بالإنترنت، ثم حاول مرة أخرى."</string>
+    <string name="driver_offline_trip_end_alert">لا يمكنك بدء الرحلة عندما تكون غير متصل بالإنترنت. يرجى العودة إلى الشاشة الرئيسية، وضبط اتصالك بالإنترنت، ثم حاول مرة أخرى.</string>
+    <string name="logout_alert_msg">سيتم تسجيل خروجك لأسباب أمنية. نأسف على الإزعاج، يرجى تسجيل الدخول مرة أخرى.</string>
+    <string name="session_expire">انتهاء الجلسة.!!</string>
+    <string name="network_alert">الرجاء التحقق من اتصال الانترنت الخاص بك</string>
+    <string name="shuttle">خدمة النقل</string>
+    <string name="llb_passenger">راكب</string>
+    <string name="current_time">الوقت الحالي</string>
+    <string name="start_at">تبدأ في</string>
+    <string name="end_at">ينتهي عند </string>
+    <string name="navigate_ride">التنقل في الطريق</string>
+    <string name="no_notification_available">لا يوجد إشعار متاح</string>
+    <string name="permission_alert_msg">ساعد العميل من خلال منحنا أذونات الموقع.</string>
+    <string name="permission_alert_description">يقوم التطبيق بجمع بيانات الموقع لإظهار مسارات حافلات العملاء حتى عندما يكون التطبيق مغلقًا أو غير مستخدم.</string>
+    <string name="location_permission_txt">الموقع (إظهار مساراتك))</string>
+    <string name="notification_permission_txt">الإخطار (لتلقي الإخطارات المتعلقة بالحجز)</string>
+    <string name="camera_permission_txt">الكاميرا والتخزين (لصورة الملف الشخصي)</string>
+    <string name="lbl_lest_get_started">هيا بنا نبدأ</string>
+    <string name="driver_name">اسم السائق</string>
+    <string name="share_and_earn">شارك واكسب</string>
+    <string name="my_account">حسابي</string>
+    <string name="logout">تسجيل خروج</string>
+    <string name="lbl_active_ride">رحلة نشطةE</string>
+    <string name="lbl_from">من</string>
+    <string name="to">ل</string>
+    <string name="lbl_location_permission_required">مطلوب إذن الموقع.</string>
+    <string name="lbl_location_permission_required_msg">مطلوب إذن الموقع للعثور على الرحلات القريبة منك.</string>
+    <string name="lbl_allow_permission">السماح بالإذن</string>
+    <string name="lbl_allow_background_permission">السماح باذن الخلفية</string>
+    <string name="intro_txt_1">اجعل كل رحلة موفرة وسهلة معنا.</string>
+    <string name="seconds_left">ثواني متبقية</string>
+    <string name="active_schedule">الجدول الزمني الحالى</string>
+    <string name="invalid_otp">كلمة المرور لمرة واحدة غير صالحة، يرجى المحاولة مرة أخرى باستخدام كلمة المرور الجديدة.</string>
+    <string name="text_totalseat_left">إجمالي المقعد الأيسر</string>
+    <string name="text_change_language">تغيير اللغة</string>
+    <string name="this_language_is_already_set">تم تعيين هذه اللغة بالفعل.</string>
+
+    <string name="new_version_with_updated_features_available_on_the_play_store_please_update_the_application_to_continue">إصدار جديد مع ميزات محدثة متاحة في متجر . يرجى تحديث التطبيق للمتابعة.</string>
+    <string name="update_available">التحديث متاح</string>
+    <string name="update">تحديث</string>
+    <string name="confirm">تأكيد</string>
+    <string name="title_more">المزيد</string>
+    <string name="msg_passanger_dtls">ما هي تفاصيل الركاب التي تريد رؤيتها؟</string>
+    <string name="text_pickUp">يركب</string>
+    <string name="text_drop">نزول</string>
+    <string name="txt_date">تاريخ</string>
+    <string name="lbl_payment">مجموع الاجرة</string>
+    <string name="txtColon">:</string>
+    <string name="txt_bus_name">اسم الاتوبيس</string>
+    <string name="txt_passenger">ركاب</string>
+    <string name="lbl_pnr_no">رقم الحجز</string>
+    <string name="you_cant_start_this_trip_before_time">لا يمكنك بدء الرحلات قبل أن يحين وقتها.</string>
+    <string name="lbl_passenger_dtls">تفاصيل الركاب</string>
+    <string name="text_bus_no">رقم الحافلة</string>
+    <string name="title_ticket_details">تفاصيل التذكرة</string>
+    <string name="text_onboard">صعد على متنها</string>
+    <string name="you_cant_start_this_trip">لا يمكنك بدء هذه الرحلة أثناء تشغيل رحلة أخرى</string>
+    <string name="mode">الوضع :</string>
+    <string name="date">تاريخ :</string>
+    <string name="terms_amp_conditions">البنود و الظروف</string>
+    <string name="please_accept_our_terms_and_conditions">يرجى قبول الشروط والأحكام الخاصة بنا.</string>
+    <string name="policy_policy">سياسة الخصوصية</string>
+
+    <string-array name="language">
+        <item>لغة</item>
+        <item>English</item>
+        <item>عربي</item>
+    </string-array>
+
+</resources>

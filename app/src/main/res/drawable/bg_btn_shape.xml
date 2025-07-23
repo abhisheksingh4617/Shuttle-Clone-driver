@@ -1,0 +1,15 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:state_pressed="false" android:drawable="@color/colorAccent" />
+    <item android:state_focused="true" android:state_pressed="true" android:drawable="@drawable/btn_clicked_efect" />
+    <item android:state_focused="false" android:state_pressed="true" android:drawable="@drawable/btn_clicked_efect" />
+
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <gradient
+                android:endColor="@color/endcolor"
+                android:startColor="@color/startcolor" />
+            <corners android:radius="5dp" />
+
+        </shape>
+    </item>
+</selector>

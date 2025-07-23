@@ -1,0 +1,157 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+}
+
+android {
+    compileSdkVersion = 35
+    buildToolsVersion = "35.0.0"
+
+    defaultConfig {
+        applicationId "com.shuttleclone.driver"
+        minSdkVersion 23
+        targetSdkVersion 35
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            shrinkResources false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+    namespace 'com.shuttleclone.driver'
+    defaultConfig {
+        resourceConfigurations += ['en', 'ar']
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation "androidx.multidex:multidex:2.0.1"
+
+    implementation 'org.jsoup:jsoup:1.17.2'
+
+
+
+    //ViewModel Live Data
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.8.2'
+
+
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-invites:17.0.0'
+    implementation 'com.google.firebase:firebase-dynamic-links-ktx:22.1.0'
+    implementation 'com.google.firebase:firebase-messaging:24.0.0'
+    implementation(platform('com.google.firebase:firebase-bom:33.1.0'))
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+
+
+    //Google play services for google login
+    implementation 'com.google.android.gms:play-services-auth:21.2.0'
+    implementation 'com.google.android.gms:play-services-location:21.3.0'
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+
+
+
+    /* pickup country code & name library*/
+    implementation 'com.hbb20:ccp:2.7.3'
+
+    /* scalable dp library */
+    implementation 'com.intuit.sdp:sdp-android:1.1.1'
+
+
+
+    //facebook login
+    implementation 'com.facebook.android:facebook-android-sdk:17.0.0'
+
+    /* glide */
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+
+    implementation 'com.google.code.gson:gson:2.11.0'
+    //https://github.com/square/okhttp
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+    // https://github.com/square/retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+
+    // required to avoid crash on Android 12 API 31
+    implementation 'androidx.work:work-runtime-ktx:2.9.0'
+
+    // https://github.com/ReactiveX/RxAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+
+    //circle image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //DotIndicator
+    implementation 'com.tbuonomo:dotsindicator:5.1.0'
+
+    //Event Bus
+    implementation 'org.greenrobot:eventbus:3.3.1'
+
+    //ToolTip
+    implementation 'com.nhaarman.supertooltips:library:3.0.0'
+
+    //QR Code Scanner
+    implementation 'com.github.yuriy-budiyev:code-scanner:2.3.0'
+
+    //Slider Button
+    implementation 'com.ncorti:slidetoact:0.11.0'
+
+    //PreferenceManager
+    def preference_version = '1.2.1'
+    // Java language implementation
+    implementation "androidx.preference:preference:$preference_version"
+    // Kotlin
+    implementation "androidx.preference:preference-ktx:$preference_version"
+
+    //toggle Switch
+    implementation 'com.github.angads25:toggle:1.1.0'
+
+    implementation 'androidx.browser:browser:1.8.0'
+}

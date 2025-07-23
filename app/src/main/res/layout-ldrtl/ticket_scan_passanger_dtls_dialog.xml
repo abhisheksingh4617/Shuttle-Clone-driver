@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvBusRoutesItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_xsmall"
+        app:cardCornerRadius="@dimen/spacing_small"
+        app:cardElevation="@dimen/card_shadow">
+
+        <RelativeLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:id="@+id/rlBookingPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginBottom="-15dp">
+
+                <LinearLayout
+                    android:id="@+id/llWhImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/spacing_medium"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivUserImg"
+                        android:layout_width="@dimen/_60sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:backgroundTint="@color/darkgreen"
+                        android:src="@drawable/ic_bus"/>
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:layout_toEndOf="@+id/llWhImg"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginRight="@dimen/spacing_medium"
+                        android:layout_toRightOf="@+id/tvAmount"
+                        android:singleLine="true"
+                        android:gravity="right|center"
+                        android:fontFamily="@font/googlesansregular"
+                        android:text="@string/lbl_payment"
+                        android:textColor="@color/textheader"
+                        android:textSize="@dimen/font_large" />
+
+                    <TextView
+                        android:id="@+id/tvAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginLeft="@dimen/spacing_medium"
+                        android:fontFamily="@font/googlesansbold"
+                        android:singleLine="true"
+                        android:text="0.0"
+                        android:textColor="@color/textheader"
+                        android:textSize="@dimen/font_mlarge" />
+
+                    <TextView
+                        android:id="@+id/tvPaymentMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvTitle"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:fontFamily="@font/googlesansregular"
+                        android:gravity="center_vertical"
+                        android:text="@string/mode"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/font_medium" />
+
+                    <TextView
+                        android:id="@+id/tvDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvPaymentMode"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:layout_marginEnd="@dimen/spacing_small"
+                        android:fontFamily="@font/googlesansregular"
+                        android:gravity="center_vertical"
+                        android:text="@string/date"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/font_medium" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rlContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlBookingPayment"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/tvDestination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_medium"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/googlesansbold"
+                    android:maxLines="2"
+                    android:text="@string/title_ticket_details"
+                    android:textColor="@color/textheader"
+                    android:textSize="@dimen/font_large" />
+
+                <LinearLayout
+                    android:id="@+id/layBusDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvDestination"
+                    android:layout_marginTop="-5dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/googlesansregular"
+                            android:paddingEnd="@dimen/spacing_medium"
+                            android:text="@string/text_bus_no"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:fontFamily="@font/googlesansregular"
+                            android:text="@string/txtColon"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:id="@+id/tvBusNo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:gravity="center|right"
+                            android:fontFamily="@font/googlesansbold"
+                            android:paddingStart="@dimen/spacing_small"
+                            android:paddingEnd="@dimen/spacing_small"
+                            android:textColor="@color/endcolor"
+                            android:textSize="@dimen/font_medium" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/googlesansregular"
+                            android:paddingEnd="@dimen/spacing_medium"
+                            android:text="@string/txt_bus_name"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:fontFamily="@font/googlesansregular"
+                            android:text="@string/txtColon"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:id="@+id/tvBusName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:gravity="center|right"
+                            android:fontFamily="@font/googlesansbold"
+                            android:paddingStart="@dimen/spacing_small"
+                            android:paddingEnd="@dimen/spacing_small"
+                            android:textColor="@color/endcolor"
+                            android:textSize="@dimen/font_medium" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/googlesansregular"
+                            android:text="@string/text_seat_no"
+                            android:paddingEnd="@dimen/spacing_medium"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:fontFamily="@font/googlesansregular"
+                            android:text="@string/txtColon"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:id="@+id/tvSeatNo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:fontFamily="@font/googlesansregular"
+                            android:paddingStart="@dimen/spacing_small"
+                            android:paddingEnd="@dimen/spacing_small"
+                            android:textColor="@color/endcolor"
+                            android:textSize="@dimen/font_medium"
+                            android:gravity="center|right"
+                            tools:text="xxxx" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/googlesansregular"
+                            android:text="@string/txt_passenger"
+                            android:paddingEnd="@dimen/spacing_medium"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:fontFamily="@font/googlesansregular"
+                            android:text="@string/txtColon"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:id="@+id/tvPassengersNo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:fontFamily="@font/googlesansregular"
+                            android:paddingStart="@dimen/spacing_small"
+                            android:paddingEnd="@dimen/spacing_small"
+                            android:textColor="@color/endcolor"
+                            android:textSize="@dimen/font_medium"
+                            android:gravity="center|right"
+                            tools:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.8"
+                            android:fontFamily="@font/googlesansregular"
+                            android:text="@string/lbl_pnr_no"
+                            android:paddingEnd="@dimen/spacing_medium"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.1"
+                            android:fontFamily="@font/googlesansregular"
+                            android:text="@string/txtColon"
+                            android:textColor="@color/textheader"
+                            android:textSize="@dimen/font_medium" />
+
+                        <TextView
+                            android:id="@+id/tvPNRNo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2.5"
+                            android:fontFamily="@font/googlesansregular"
+                            android:paddingStart="@dimen/spacing_small"
+                            android:paddingEnd="@dimen/spacing_small"
+                            android:textColor="@color/endcolor"
+                            android:textSize="@dimen/font_medium"
+                            android:gravity="center|right"
+                            tools:text="0" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rlContent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    android:fontFamily="@font/googlesansbold"
+                    android:paddingTop="@dimen/spacing_medium"
+                    android:paddingBottom="@dimen/spacing_medium"
+                    android:text="@string/lbl_close"
+                    android:shadowColor="@color/blue"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_large" />
+
+                <Button
+                    android:id="@+id/btnOnBord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="1dp"
+                    android:background="@color/colorPrimaryDark"
+                    android:fontFamily="@font/googlesansbold"
+                    android:paddingTop="@dimen/spacing_medium"
+                    android:paddingBottom="@dimen/spacing_medium"
+                    android:shadowColor="@color/blue"
+                    android:text="@string/confirm"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_large"
+                    android:visibility="visible"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
