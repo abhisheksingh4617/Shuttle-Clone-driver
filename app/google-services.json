@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "712025913890",
-    "firebase_url": "https://shuttle-clone-default-rtdb.firebaseio.com",
-    "project_id": "shuttle-clone",
-    "storage_bucket": "shuttle-clone.firebasestorage.app"
+    "project_number": "943529346143",
+    "project_id": "office-glider-dfa55",
+    "storage_bucket": "office-glider-dfa55.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:712025913890:android:bb2de527d8492ba32ca87b",
+        "mobilesdk_app_id": "1:943529346143:android:10856a67e5173baca187ea",
         "android_client_info": {
           "package_name": "com.shuttleclone.driver"
         }
@@ -16,26 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBE8XxdqY5o14Yx4cdb42Gpj8NlFAUBKUo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:712025913890:android:2aa9c106cd39bf402ca87b",
-        "android_client_info": {
-          "package_name": "com.shuttleclone.userapp"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBE8XxdqY5o14Yx4cdb42Gpj8NlFAUBKUo"
+          "current_key": "AIzaSyAmB3N1lgruRy6NsYHNb9xGMm-_E7sf1CU"
         }
       ],
       "services": {

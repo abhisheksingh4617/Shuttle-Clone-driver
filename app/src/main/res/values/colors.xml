@@ -8,10 +8,10 @@
     <color name="black">#FF000000</color>
 
 
-    <color name="colorPrimary">#4E8494</color>
-    <color name="colorPrimaryDark">#316371</color>
-    <color name="colorPrimaryRipple">#4E8494</color>
-    <color name="colorAccent">#4B8798</color>
+    <color name="colorPrimary">#F46523</color>
+    <color name="colorPrimaryDark">#F46523</color>
+    <color name="colorPrimaryRipple">#F46523</color>
+    <color name="colorAccent">#F46523</color>
 
     <color name="transparent_color">#00FFFFFF</color>
     <color name="divider">#BDBDBD</color>

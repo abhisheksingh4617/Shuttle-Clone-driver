@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/login_page_bg"
     android:id="@+id/root_layout"
     android:paddingStart="@dimen/spacing_large"
     android:paddingEnd="@dimen/spacing_large">
@@ -19,13 +19,6 @@
             android:layout_gravity="center_vertical"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/googlesansbold"
-                android:text="@string/text_you_want_to"
-                android:textColor="@color/textchild"
-                android:textSize="@dimen/font_xlarge" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/login_img__height"
                 android:paddingTop="@dimen/spacing_large"
-                android:src="@drawable/ic_travel" />
+                android:src="@drawable/ic_app_round_logo" />
 
 
             <Button
@@ -87,8 +80,8 @@
                     android:id="@+id/spChangeLanguage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:fontFamily="@font/googlesansbold"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/font_large" />
@@ -97,17 +90,16 @@
                     android:id="@+id/tvChangeLanguage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/spacing_small"
                     android:fontFamily="@font/googlesansbold"
                     android:text="@string/lbl_language"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/font_large"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </RelativeLayout>
-
 
 
         </LinearLayout>

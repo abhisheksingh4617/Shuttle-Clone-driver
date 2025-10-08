@@ -15,12 +15,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.shuttleclone.driver.ui.Activity.HelpActivity
-import com.shuttleclone.driver.ui.Activity.ProfileActivity
-import com.shuttleclone.driver.ui.Activity.SplashActivity
 import com.shuttleclone.driver.R
 import com.shuttleclone.driver.Util.*
 import com.shuttleclone.driver.ViewModel.MainViewModel
+import com.shuttleclone.driver.ui.Activity.HelpActivity
+import com.shuttleclone.driver.ui.Activity.ProfileActivity
+import com.shuttleclone.driver.ui.Activity.SplashActivity
 
 class MenuFragment : Fragment(), View.OnClickListener {
 
@@ -154,9 +154,9 @@ class MenuFragment : Fragment(), View.OnClickListener {
             if (getPreference(requireContext(), AppConstants.LANGUAGE).equals("en")) {
                 selectedText = "English"
                 radioGroup!!.check(R.id.rbEnglish)
-            } else if(getPreference(requireContext(), AppConstants.LANGUAGE).equals("ar")) {
-                selectedText="عربي"
-                radioGroup!!.check(R.id.rbArabic)
+            }  else if(getPreference(requireContext(), AppConstants.LANGUAGE).equals("hi")) {
+                selectedText="हिन्दी"
+                radioGroup!!.check(R.id.rbHindi)
             }
 
             radioGroup.setOnCheckedChangeListener { group, checkedId ->
@@ -170,7 +170,8 @@ class MenuFragment : Fragment(), View.OnClickListener {
                 if (getPreference(requireContext(), AppConstants.LANGUAGE).equals("en") && selectedText.equals("English")) {
                     toast(requireContext(), getString(R.string.this_language_is_already_set))
                     return@setOnClickListener
-                } else if (getPreference(requireContext(), AppConstants.LANGUAGE).equals("ar") && selectedText.equals("عربي")) {
+                }
+                else if (getPreference(requireContext(), AppConstants.LANGUAGE).equals("hi") && selectedText.equals("हिन्दी")) {
                     toast(requireContext(), getString(R.string.this_language_is_already_set))
                     return@setOnClickListener
                 }
@@ -211,11 +212,12 @@ class MenuFragment : Fragment(), View.OnClickListener {
                                                 requireActivity().finishAffinity()
                                             }
 
-                                            "عربي" -> {
+
+                                            "हिन्दी" -> {
                                                 savePreference(
                                                     requireActivity(),
                                                     AppConstants.LANGUAGE,
-                                                    LocaleManager.ARABIC
+                                                    LocaleManager.HINDI
                                                 )
 
                                                 requireActivity().startActivity(

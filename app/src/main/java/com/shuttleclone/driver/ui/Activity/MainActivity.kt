@@ -64,7 +64,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     private var revealX = 0
     private var revealY = 0
     private var PERMISSION_REQUEST_LOCATION = 102
-    private var REQUEST_ID_MULTIPLE_PERMISSIONS = 1
+    private var REQUEST_ID_MULTIPLE_PERMISSIONS = 5
     private val REQUEST_BACKGROUND_LOCATION_PERMISSIONS_REQUEST_CODE = 56
     private val mainViewModel: MainViewModel by viewModels()
 

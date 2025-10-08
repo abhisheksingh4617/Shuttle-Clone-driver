@@ -60,11 +60,11 @@
                         android:layout_weight="1"
                         android:text="English"/>
                     <RadioButton
-                        android:id="@+id/rbArabic"
+                        android:id="@+id/rbHindi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="عربي"/>
+                        android:text="हिन्दी"/>
                 </RadioGroup>
 
             </LinearLayout>

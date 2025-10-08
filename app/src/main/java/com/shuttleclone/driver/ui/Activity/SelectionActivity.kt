@@ -103,11 +103,11 @@ class SelectionActivity : BaseActivity(), View.OnClickListener {
                         finishAffinity()
                     }
 
-                    "عربي" -> {
+                    "हिन्दी" -> {
                         savePreference(
                             this@SelectionActivity,
                             AppConstants.LANGUAGE,
-                            LocaleManager.ARABIC
+                            LocaleManager.HINDI
                         )
                         startActivity(SplashActivity::class.java)
                         finishAffinity()

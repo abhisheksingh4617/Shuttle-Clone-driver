@@ -197,14 +197,12 @@ class SignInActivity : BaseActivity(), View.OnClickListener {
                         startActivity(SplashActivity::class.java)
                         finishAffinity()
                     }
-
-                    "عربي" -> {
+                    "हिन्दी" -> {
                         savePreference(
                             this@SignInActivity,
                             AppConstants.LANGUAGE,
-                            LocaleManager.ARABIC
+                            LocaleManager.HINDI
                         )
-
                         startActivity(SplashActivity::class.java)
                         finishAffinity()
                     }

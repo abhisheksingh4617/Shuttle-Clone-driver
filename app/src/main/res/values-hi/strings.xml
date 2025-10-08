@@ -1,0 +1,158 @@
+<resources>
+    <string name="txt_term_and_policy"><![CDATA[<p>जारी रखने पर, आप हमारी <a href="https://demoshuttle.ridein.in/#/terms">सेवा शर्तें</a> और <a href="https://demoshuttle.ridein.in/#/privacy-policy">गोपनीयता नीति</a> से सहमत होते हैं।</p>]]></string>
+
+    <string name="lbl_bus_routes">बस मार्ग</string>
+    <string name="title_passenger_list">यात्री सूची</string>
+    <string name="title_stopes_details">स्टॉप विवरण</string>
+    <string name="hint_enter_your_contact_number">अपना संपर्क नंबर दर्ज करें</string>
+    <string name="lbl_email">ईमेल :</string>
+    <string name="title_language_setting">भाषा सेटिंग</string>
+    <string name="lbl_language">भाषा :</string>
+    <string name="txt_english_us">अंग्रेज़ी - संयुक्त राज्य अमेरिका</string>
+    <string name="lbl_first_name">पहला नाम :</string>
+    <string name="lbl_last_name">अंतिम नाम :</string>
+    <string name="lbl_gender">लिंग :</string>
+
+
+    <string name="start_with_phone_no">फोन नंबर से शुरू करें</string>
+    <string name="lbl_help_support">मदद और समर्थन</string>
+    <string name="hint_enter_your_emailid">अपना ईमेल दर्ज करें</string>
+    <string name="msg_email_valid">कृपया वैध ईमेल दर्ज करें</string>
+    <string name="msg_valid_mobile_number">सही मोबाइल नंबर दर्ज करें</string>
+    <string name="msg_mobile_number">मोबाइल नंबर आवश्यक है</string>
+    <string name="msg_description">विवरण आवश्यक है</string>
+    <string name="changed_number">क्या आपने नंबर बदला है? अपना अकाउंट खोजें</string>
+
+
+    <string name="hint_email">ईमेल दर्ज करें</string>
+    <string name="lbl_notification">सूचनाएं</string>
+    <string name="lbl_verification">अपना सत्यापन कोड दर्ज करें: हमने अभी अभी आपके मोबाइल नंबर पर भेजा है</string>
+    <string name="payment_info_message">भुगतान की जानकारी, सवारी से संबंधित विवरण और महत्वपूर्ण सूचनाएं इस नंबर पर भेजी जाएंगी।</string>
+
+    <string name="txt_verify">सत्यापित करें</string>
+    <string name="txt_Resend">फिर से भेजें</string>
+    <string name="text_you_want_to">आपका स्वागत है</string>
+    <string name="hint_mobile">फोन नंबर दर्ज करें</string>
+    <string name="lbl_continue">जारी रखें</string>
+    <string name="text_signinwith">से साइन इन करें</string>
+    <string name="verification">सत्यापन</string>
+    <string name="profile_settings">प्रोफाइल सेटिंग्स</string>
+    <string name="lbl_help">मदद करें</string>
+    <string name="lbl_submit">सबमिट करें</string>
+    <string name="home">होम</string>
+    <string name="text_phone">फोन :</string>
+    <string name="hint_enter_first_name">पहला नाम दर्ज करें</string>
+    <string name="hint_enter_last_name">अंतिम नाम दर्ज करें</string>
+    <string name="text_save">सहेजें</string>
+    <string name="msg_code">कोड आवश्यक है</string>
+    <string name="text_description">विवरण</string>
+    <string name="text_logout">लॉग आउट</string>
+    <string name="msg_logout">क्या आप वाकई लॉग आउट करना चाहते हैं?</string>
+    <string name="text_yes">हाँ</string>
+    <string name="text_no">नहीं</string>
+    <string name="text_totalseat">कुल सीटें :</string>
+    <string name="text_seat_no">सीट नंबर</string>
+    <string name="text_settings">सेटिंग्स</string>
+
+    <string name="text_close">बंद करें</string>
+    <string name="text_version">संस्करण :</string>
+    <string name="letsgo">चलो चलते हैं</string>
+    <string name="lbl_todays_sch">आज का शेड्यूल</string>
+    <string name="lbl_start_ride">वर्तमान यात्रा विवरण</string>
+    <string name="lbl_passenger_list">यात्री सूची</string>
+    <string name="title_your_name">आपका नाम</string>
+    <string name="title_your_contact">आपका संपर्क</string>
+    <string name="title_note">नोट: मोबाइल नंबर बदलने या अपडेट करने के लिए मालिक से संपर्क करें।</string>
+    <string name="hint_gender">लिंग</string>
+
+    <string name="lbl_profile">प्रोफाइल</string>
+    <string name="something_wrong">कृपया पुनः प्रयास करें, कुछ गलत हो गया।</string>
+    <string name="lbl_allow">अनुमति दें</string>
+    <string name="lbl_no_trips_available">कोई यात्रा उपलब्ध नहीं है</string>
+    <string name="title_stops">बस स्टॉप्स</string>
+    <string name="lbl_no_passenger">इस स्टॉप पर कोई यात्री नहीं</string>
+    <string name="lbl_close">बंद करें</string>
+
+    <string name="background_permission_denied_explanation">पृष्ठभूमि में लोकेशन अनुमति अस्वीकार कर दी गई है, लेकिन यह एप्लिकेशन की कार्यक्षमता बेहतर बनाने के लिए आवश्यक है।</string>
+    <string name="background_location_permission_rationale">एप्लिकेशन की कार्यक्षमता बेहतर बनाने के लिए पृष्ठभूमि में लोकेशन अनुमति आवश्यक है।</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="fine_location_permission_rationale">सटीक लोकेशन और आवश्यक कार्यक्षमता के लिए अनुमति दें।</string>
+    <string name="fine_permission_denied_explanation">सटीक लोकेशन अनुमति अस्वीकार कर दी गई है, लेकिन यह मूलभूत कार्यक्षमता के लिए आवश्यक है।</string>
+
+    <string name="ok">हाँ</string>
+    <string name="txt_start_ride">यात्रा शुरू करें</string>
+    <string name="txt_finish_ride">यात्रा समाप्त करें</string>
+    <string name="offline">ऑफलाइन</string>
+    <string name="online">ऑनलाइन</string>
+    <string name="pls_wait_loading">कृपया प्रतीक्षा करें, लोड हो रहा है...</string>
+    <string name="txt_alert">चेतावनी!!</string>
+    <string name="msg_driver_offline_alert">जब आपके पास कोई निश्चित बुकिंग हो तो आप ऑफलाइन नहीं हो सकते।</string>
+    <string name="driver_offline_trip_start_alert">जब आप ऑफलाइन हों तो यात्रा शुरू नहीं कर सकते। कृपया मुख्य स्क्रीन पर लौटें, अपना इंटरनेट कनेक्शन सेट करें, फिर पुनः प्रयास करें।</string>
+    <string name="driver_offline_trip_end_alert">जब आप ऑफलाइन हों तो यात्रा शुरू नहीं कर सकते। कृपया मुख्य स्क्रीन पर लौटें, अपना इंटरनेट कनेक्शन सेट करें, फिर पुनः प्रयास करें।</string>
+    <string name="logout_alert_msg">सुरक्षा कारणों से आपको लॉग आउट कर दिया जाएगा। असुविधा के लिए खेद है, कृपया पुनः लॉगिन करें।</string>
+    <string name="session_expire">सत्र समाप्त।!!</string>
+    <string name="network_alert">कृपया अपने इंटरनेट कनेक्शन की जांच करें।</string>
+    <string name="shuttle">शटल सेवा</string>
+    <string name="llb_passenger">यात्री</string>
+    <string name="current_time">वर्तमान समय</string>
+    <string name="start_at">शुरू होता है</string>
+    <string name="end_at">समाप्त होता है</string>
+    <string name="navigate_ride">राइड नेविगेशन</string>
+    <string name="no_notification_available">कोई सूचना उपलब्ध नहीं</string>
+    <string name="permission_alert_msg">कृपया हमे लोकेशन अनुमतियाँ दें, जो क्लाइंट के बस मार्ग दिखाने में मदद करें।</string>
+    <string name="permission_alert_description">यह एप्लिकेशन लोकेशन डाटा इकट्ठा करता है ताकि ग्राहक के पास मौजूद बस मार्ग दिखाए जा सकें, भले ही एप्लिकेशन बंद हो या उपयोग में न हो।</string>
+    <string name="location_permission_txt">लोकेशन (अपना मार्ग दिखाएं)</string>
+    <string name="notification_permission_txt">सूचना (बुकिंग सूचनाएँ प्राप्त करने के लिए)</string>
+    <string name="camera_permission_txt">कैमरा और स्टोरेज (प्रोफ़ाइल चित्र के लिए)</string>
+    <string name="lbl_lest_get_started">चलो शुरू करते हैं</string>
+    <string name="driver_name">ड्राइवर का नाम</string>
+    <string name="share_and_earn">साझा करें और कमाएं</string>
+    <string name="my_account">मेरा खाता</string>
+    <string name="logout">लॉग आउट</string>
+    <string name="lbl_active_ride">सक्रिय राइड</string>
+    <string name="lbl_from">से</string>
+    <string name="to">तक</string>
+    <string name="lbl_location_permission_required">लोकेशन अनुमति आवश्यक है।</string>
+    <string name="lbl_location_permission_required_msg">अपने आस-पास की यात्राओं को खोजने के लिए लोकेशन अनुमति आवश्यक है।</string>
+    <string name="lbl_allow_permission">अनुमति दें</string>
+    <string name="lbl_allow_background_permission">पृष्ठभूमि अनुमति दें</string>
+    <string name="intro_txt_1">हमारे साथ हर यात्रा को आसान और किफायती बनाएं।</string>
+    <string name="seconds_left">बचे हुए सेकंड</string>
+    <string name="active_schedule">सक्रिय शेड्यूल</string>
+    <string name="invalid_otp">अमान्य OTP, कृपया नए OTP के साथ पुनः प्रयास करें।</string>
+    <string name="text_totalseat_left">बाएं कुल सीटें</string>
+    <string name="text_change_language">भाषा बदलें</string>
+    <string name="this_language_is_already_set">यह भाषा पहले से सेट है।</string>
+
+    <string name="new_version_with_updated_features_available_on_the_play_store_please_update_the_application_to_continue">प्ले स्टोर पर नई सुविधाओं के साथ नया संस्करण उपलब्ध है। कृपया जारी रखने के लिए एप्लिकेशन अपडेट करें।</string>
+    <string name="update_available">अपडेट उपलब्ध है</string>
+    <string name="update">अपडेट करें</string>
+    <string name="confirm">पुष्टि करें</string>
+    <string name="title_more">और अधिक</string>
+    <string name="msg_passanger_dtls">आप कौन सी यात्री जानकारी देखना चाहते हैं?</string>
+    <string name="text_pickUp">चढ़ना</string>
+    <string name="text_drop">उतरना</string>
+    <string name="txt_date">तारीख</string>
+    <string name="lbl_payment">कुल भुगतान</string>
+    <string name="txtColon">:</string>
+    <string name="txt_bus_name">बस का नाम</string>
+    <string name="txt_passenger">यात्री</string>
+    <string name="lbl_pnr_no">आरक्षण संख्या</string>
+    <string name="you_cant_start_this_trip_before_time">आप यात्रा शुरू नहीं कर सकते जब तक कि समय न हो।</string>
+    <string name="lbl_passenger_dtls">यात्री विवरण</string>
+    <string name="text_bus_no">बस नंबर</string>
+    <string name="title_ticket_details">टिकट विवरण</string>
+    <string name="text_onboard">चढ़े हुए</string>
+    <string name="you_cant_start_this_trip">जब एक और यात्रा चल रही हो तब आप यह यात्रा शुरू नहीं कर सकते।</string>
+    <string name="mode">मोड :</string>
+    <string name="date">दिनांक :</string>
+    <string name="terms_amp_conditions">नियम और शर्तें</string>
+    <string name="please_accept_our_terms_and_conditions">कृपया हमारी नियम और शर्तें स्वीकार करें।</string>
+    <string name="policy_policy">गोपनीयता नीति</string>
+
+    <string-array name="language">
+        <item>भाषा</item>
+        <item>English</item>
+        <item>हिन्दी</item>
+    </string-array>
+</resources>

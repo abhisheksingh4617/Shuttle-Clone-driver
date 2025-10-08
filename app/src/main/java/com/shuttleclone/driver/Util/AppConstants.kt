@@ -8,12 +8,14 @@ object AppConstants {
     /*variable declaration*/
     const val NA = "N/A"
 
-    //const val BASE_URL = "https://demo-shuttle.in/api/" //YOU BASE URL
-    const val BASE_URL = "http://localhost:8000/" //YOU BASE URL
+    // 🔹 Local PC server ka URL (Emulator ke liye)
+    const val BASE_URL = "http://13.48.236.133:5000/api/"// chal raha hai to emulator me 10.0.2.2 use hoga
+   // const val BASE_URL = "http://13.48.236.133/"
 
+    // Agar future me mobile device (real phone) pe test karna ho to IP wapas change kar lena
+    // Example: const val BASE_URL = "http://192.168.137.1:8001/"
 
     const val COUNTRY_CODE = 91
-
 
     //SharedPreferences
     var APP_NAME = "Shuttle Clone"
@@ -38,14 +40,14 @@ object AppConstants {
     var DRIVER_ANGLE = "DRIVER_ANGLE"
     var IS_BOOKING_ASSIGNED = "IS_BOOKING_ASSIGNED"
     var IS_TRIP_STARTED = "IS_TRIP_STARTED"
-    var DEVICE_TYPE = 1 //1 for Android and 2 for Ios
-    var COMMON_DATA ="COMMON_DATA"
-    var DRIVER_STATUS ="DRIVER_STATUS"
-    var Driver_Offline ="OFFLINE"
-    var Driver_Online ="ONLINE"
-    var Driver_Tracking ="TRACK"
-    var TRIP_STATUS ="TRIP_STATUS"
-    var LANGUAGE ="LANGUAGE"
+    var DEVICE_TYPE = 1 //1 for Android and 2 for iOS
+    var COMMON_DATA = "COMMON_DATA"
+    var DRIVER_STATUS = "DRIVER_STATUS"
+    var Driver_Offline = "OFFLINE"
+    var Driver_Online = "ONLINE"
+    var Driver_Tracking = "TRACK"
+    var TRIP_STATUS = "TRIP_STATUS"
+    var LANGUAGE = "LANGUAGE"
 
     /*Date format*/
     object DateFormat {

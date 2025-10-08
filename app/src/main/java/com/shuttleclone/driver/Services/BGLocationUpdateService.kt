@@ -271,7 +271,7 @@ class BGLocationUpdateService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         if (mFusedLocationClient!=null&&locationCallback!=null)
-          mFusedLocationClient!!.removeLocationUpdates(locationCallback)
+            mFusedLocationClient!!.removeLocationUpdates(locationCallback)
 
         myLog(TAG, "onDestroy: Called")
     }

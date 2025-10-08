@@ -22,8 +22,12 @@
     <string name="msg_description">الوصف مطلوب</string>
 
     <string name="hint_email">أدخل البريد الإلكتروني</string>
+    <string name="changed_number">هل قمت بتغيير رقمك؟ ابحث عن حسابك</string>
+
     <string name="lbl_notification">الاشعارات</string>
     <string name="lbl_verification">أدخل رمز التحقق الخاص بك: لقد أرسلنا لك للتو رقم هاتفك المحمول</string>
+    <string name="payment_info_message">भुगतान जानकारी, राइड विवरण और महत्वपूर्ण अपडेट इस नंबर पर भेजे जाएंगे</string>
+
     <string name="txt_verify">تاكيد</string>
     <string name="txt_Resend">إعادة إرسال</string>
     <string name="text_you_want_to">مرحبا بك في</string>
@@ -148,7 +152,7 @@
     <string-array name="language">
         <item>لغة</item>
         <item>English</item>
-        <item>عربي</item>
+        <item>हिन्दी</item>
     </string-array>
 
 </resources>

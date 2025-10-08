@@ -20,7 +20,7 @@ import com.shuttleclone.driver.R
 import com.shuttleclone.driver.Util.CustomToast
 
 open class BaseActivity : AppCompatActivity() {
-    /*variable declaration*/
+   /*variable declaration*/
     var mToast: CustomToast? = null
 
     /*show custom toast*/

@@ -22,6 +22,7 @@ class SplashActivity : BaseActivity(), AppUpdateResponse {
     val TAG = "SplashActivity"
     var isAppUptoDate = false
     var rootView: View? = null
+
     private var REQUEST_ID_MULTIPLE_PERMISSIONS = 1
 
 

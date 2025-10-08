@@ -1,12 +1,19 @@
 package com.shuttleclone.driver.RetrofitRepository
 
 import com.shuttleclone.driver.Model.*
+import com.google.gson.JsonObject
 import io.reactivex.Single
 import retrofit2.http.*
 
 interface ApiCalls {
 
-    // Login driver
+    // 🔹 TEST LOGIN (Postman wala simple /login endpoint)
+    @POST("login")
+    fun testLogin(
+        @Body requestBody: JsonObject
+    ): Single<JsonObject>
+
+    // Login driver (original method)
     @FormUrlEncoded
     @POST("drivers/login")
     fun loginDriver(
@@ -59,7 +66,6 @@ interface ApiCalls {
         @Field("country_code") countryCode: String,
         @Field("country_details") countryDetails: String
     ): Single<DefaultResponse>
-
 
     @GET("drivers/my-trips")
     fun myTripList(
@@ -141,11 +147,11 @@ interface ApiCalls {
     fun getConfigSettings(
         @Header("Authorization") token: String
     ): Single<CommonDataResponse>
+
     @FormUrlEncoded
     @POST("drivers/update-language")
     fun updateLanguage(
         @Header("Authorization") token: String,
         @Field("language") language: String
     ): Single<DefaultResponse>
-
 }

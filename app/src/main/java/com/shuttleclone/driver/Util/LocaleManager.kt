@@ -84,6 +84,7 @@ class LocaleManager {
 
     companion object{
         const val ENGLISH = "en"
-        const val ARABIC = "ar"
+        const val HINDI = "hi"
+
     }
 }
