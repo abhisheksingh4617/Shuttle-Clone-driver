@@ -19,6 +19,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"/>
 
     <application
         android:allowBackup="false"
@@ -31,9 +33,6 @@
         android:name="com.shuttleclone.driver.MyApp.MyApplication"
         tools:replace="android:allowBackup">
 
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
 
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
@@ -41,6 +40,9 @@
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <service
             android:name="com.shuttleclone.driver.Services.LocationUpdateService"

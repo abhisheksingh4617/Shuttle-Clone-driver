@@ -154,4 +154,9 @@ dependencies {
     implementation 'com.github.angads25:toggle:1.1.0'
 
     implementation 'androidx.browser:browser:1.8.0'
+    implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
+    implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.google.maps.android:android-maps-utils:2.2.5'
+
+
 }

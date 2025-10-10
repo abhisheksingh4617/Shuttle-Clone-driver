@@ -6,7 +6,7 @@
 <resources>
     <string name="app_name" translatable="false">&appname;</string>
 
-    <string name="google_maps_key" translatable="false">&googleMapKey;</string>
+    <string name="google_maps_key" translatable="false">AIzaSyAmB3N1lgruRy6NsYHNb9xGMm-_E7sf1CU</string>
     <string name="txt_country_code" translatable="false">&countryCode;</string>
 
     <string name="url_privacy" translatable="false">&privacyPolicyUrl;</string>
