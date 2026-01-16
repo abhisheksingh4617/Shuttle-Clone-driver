@@ -3,8 +3,10 @@ package com.shuttleclone.driver.ViewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.shuttleclone.driver.Model.*
 import com.shuttleclone.driver.RetrofitRepository.MainRepo
+import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -61,6 +63,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return repo.scannedTicketStatus
     }
 
+    // ✅ यह existing function use करेंगे Service में
+    fun updateTrackingStatus(token: String, id: String,trip_status:String, lat: String,lng:String,angle:String): MutableLiveData<TrackingStatusResponse?> {
+        repo.updateTrackingStatus(token,id,trip_status,lat,lng,angle)
+        return repo.updateTrackingData
+    }
+
     fun getNotificationData(token: String,perPage: Int,page: Int): MutableLiveData<NotificationResponseModel?> {
         repo.getNotificationData(token,perPage, page)
         return repo.notificationListData
@@ -70,12 +78,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         repo.updateNotificationStatus(token,id,readStatus)
         return repo.updateNotificationStatus
     }
-
-    fun updateTrackingStatus(token: String, id: String,trip_status:String, lat: String,lng:String,angle:String): MutableLiveData<TrackingStatusResponse?> {
-        repo.updateTrackingStatus(token,id,trip_status,lat,lng,angle)
-        return repo.updateTrackingData
-    }
-
 
     fun logOut(token: String, csrfToken: String): MutableLiveData<DefaultResponse?> {
         repo.logOut(token, csrfToken)
@@ -96,5 +98,4 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         repo.updateLanguage(token,language)
         return repo.updateLanguage
     }
-
 }

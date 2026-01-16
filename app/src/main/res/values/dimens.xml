@@ -9,6 +9,7 @@
     <dimen name="ptop_5dp">5dp</dimen>
     <dimen name="img_icon">@dimen/_20sdp</dimen>
     <dimen name="profile_width_150dp">@dimen/_90sdp</dimen>
+    <dimen name="bottom_sheet_peek_height">72dp</dimen>
     <dimen name="profile_height_150dp">@dimen/_90sdp</dimen>
 
     <dimen name="design_bottom_navigation_active_text_size" tools:ignore="PrivateResource">12sp</dimen>

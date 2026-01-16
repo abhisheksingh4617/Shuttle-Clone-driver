@@ -1,6 +1,7 @@
 package com.shuttleclone.driver.ui.Fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +16,9 @@ import com.shuttleclone.driver.ui.Adapters.DriverAssignedTripsAdapter
 import com.shuttleclone.driver.ui.Adapters.TripsAdapter
 import com.shuttleclone.driver.Model.TripsDataItem
 import com.shuttleclone.driver.R
+import com.shuttleclone.driver.Services.BackGroundLocationService
 import com.shuttleclone.driver.Util.*
 import com.shuttleclone.driver.ViewModel.MainViewModel
-
 
 class HomeFragment : Fragment() {
 
@@ -29,7 +30,7 @@ class HomeFragment : Fragment() {
     var rvTrips: RecyclerView? = null
     var tripsAdapter: TripsAdapter? = null
     var driverAssignedTripsAdapter: DriverAssignedTripsAdapter? = null
-    private var mainViewModel: MainViewModel ? = null
+    private var mainViewModel: MainViewModel? = null
     var mContext: Context? = null
     var layNoTripsAvailable: LinearLayout? = null
 
@@ -37,27 +38,21 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
         mContext = this.context
-
-
-        /* if (!EventBus.getDefault().isRegistered(this)) {
-             EventBus.getDefault().register(this)
-         }*/
-
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-
         initView(view)
         return view
     }
 
-
     override fun onResume() {
         super.onResume()
         handelViewModel()
+
+        // 👇 हमेशा BackGroundLocationService start करें जब online
+        if (getPreference(mContext, AppConstants.DRIVER_STATUS) == AppConstants.Driver_Online) {
+            startBackGroundLocationService(requireActivity())
+        }
     }
 
     private fun initView(view: View) {
@@ -65,14 +60,10 @@ class HomeFragment : Fragment() {
         layNoTripsAvailable = view.findViewById(R.id.layNoTripsAvailable)
     }
 
-
     private fun handelViewModel() {
         try {
             if (isInternetConnection(requireActivity())) {
-                LoadingDialog.showLoadingDialog(
-                    requireActivity(),
-                    getString(R.string.pls_wait_loading)
-                )
+                LoadingDialog.showLoadingDialog(requireActivity(), getString(R.string.pls_wait_loading))
                 mainViewModel!!.myTrips(getPreference(mContext, AppConstants.TOKEN)!!)
                     .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                         LoadingDialog.cancelLoading()
@@ -91,18 +82,17 @@ class HomeFragment : Fragment() {
                             (mContext as BaseActivity).showView(rvTrips!!)
 
                             setListener(it!!.data)
-//                            savePreference(mContext, AppConstants.ASSIGNED_ID, it.data.add)
                             savePreference(mContext, AppConstants.IS_BOOKING_ASSIGNED, true)
+
+                            // 👇 हमेशा BackGroundLocationService चालू रखें
+                            startBackGroundLocationService(requireActivity())
 
                             if (isPreference(mContext, AppConstants.IS_TRIP_STARTED)) {
                                 stopDriverLocationService(requireActivity())
                                 startTripTrackingLocationService(requireActivity())
-                            } else if (getPreference(mContext, AppConstants.DRIVER_STATUS).equals(
-                                    AppConstants.Driver_Online
-                                )
-                            ) {
+                            } else if (getPreference(mContext, AppConstants.DRIVER_STATUS) == AppConstants.Driver_Online) {
                                 stopTripTrackingLocationService(requireActivity())
-                                startDriverLocationService(requireActivity())
+                                // startDriverLocationService को comment किया - BackGroundLocationService use करेंगे
                             }
 
                         } else {
@@ -111,17 +101,13 @@ class HomeFragment : Fragment() {
                             savePreference(mContext, AppConstants.IS_BOOKING_ASSIGNED, false)
                             savePreference(mContext, AppConstants.ASSIGNED_ID, "")
 
+                            // 👇 No trips भी हो तो online driver के लिए service चालू रखें
                             if (!isPreference(mContext, AppConstants.IS_TRIP_STARTED)
-                                && getPreference(mContext, AppConstants.DRIVER_STATUS).equals(
-                                    AppConstants.Driver_Online
-                                )
+                                && getPreference(mContext, AppConstants.DRIVER_STATUS) == AppConstants.Driver_Online
                             ) {
+                                startBackGroundLocationService(requireActivity())
                                 stopTripTrackingLocationService(requireActivity())
-                                startDriverLocationService(requireActivity())
-                            } else if (getPreference(mContext, AppConstants.DRIVER_STATUS).equals(
-                                    AppConstants.Driver_Offline
-                                )
-                            ) {
+                            } else if (getPreference(mContext, AppConstants.DRIVER_STATUS) == AppConstants.Driver_Offline) {
                                 stopTripTrackingLocationService(requireActivity())
                                 stopDriverLocationService(requireActivity())
                             }
@@ -130,43 +116,45 @@ class HomeFragment : Fragment() {
                                 alertDialog(requireContext(), it.message.toString())
                             else alertDialog(requireContext(), it.errorResponse.message.toString())
                         }
-
                     })
             } else toast(mContext)
         } catch (e: Exception) {
             savePreference(mContext, AppConstants.IS_BOOKING_ASSIGNED, false)
             alertDialog(requireContext(), e.localizedMessage)
-            myLog(TAG, "handelViewModel: Errr=${e.localizedMessage}")
+            myLog(TAG, "handelViewModel: Error=${e.localizedMessage}")
         }
     }
 
-
     private fun setListener(data: List<TripsDataItem>?) {
-        driverAssignedTripsAdapter = DriverAssignedTripsAdapter(requireActivity()!!, this, data)
+        driverAssignedTripsAdapter = DriverAssignedTripsAdapter(requireActivity(), this, data)
         rvTrips!!.apply {
             layoutManager = LinearLayoutManager(activity)
             setHasFixedSize(true)
             adapter = driverAssignedTripsAdapter
         }
         RunLayoutAnimation(activity, rvTrips!!)
+    }
 
-        /* tripsAdapter = TripsAdapter(requireActivity()!!, this,data)
-         rvTrips!!.apply {
-             layoutManager = LinearLayoutManager(activity)
-             setHasFixedSize(true)
-             adapter = tripsAdapter
-         }
-         RunLayoutAnimation(activity, rvTrips!!)*/
+    // 👇 नया function - BackGroundLocationService start करने के लिए
+    private fun startBackGroundLocationService(context: Context) {
+        try {
+            val intent = Intent(context, BackGroundLocationService::class.java)
+
+            // ✅ API 26+ के लिए startForegroundService, निचे के लिए startService
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                androidx.core.content.ContextCompat.startForegroundService(context, intent)
+            } else {
+                context.startService(intent)
+            }
+
+            myLog(TAG, "✅ BackGroundLocationService STARTED - Live Tracking ON")
+        } catch (e: Exception) {
+            myLog(TAG, "❌ BackGroundLocationService start error: ${e.message}")
+        }
     }
 
 
-    /* @Subscribe(threadMode = ThreadMode.MAIN)
-     fun onEventMainThread(pusher: UpdateBookingStatusEvents) {
-         handelViewModel()
-     }*/
-
     override fun onDestroy() {
         super.onDestroy()
-//        EventBus.getDefault().unregister(this)
     }
 }

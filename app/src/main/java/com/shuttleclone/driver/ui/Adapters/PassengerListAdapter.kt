@@ -7,6 +7,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
+import android.util.Log
+
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -48,15 +50,17 @@ class PassengerListAdapter(
         holder.apply {
             try {
                 val passengerdata = data!!.get(position)
-                tvPassengerName.text = passengerdata!!.subPassengers!![0].fullname
+                val fullname = passengerdata.fullname ?: passengerdata.userFullName ?: passengerdata.subPassengers?.firstOrNull()?.fullname ?: "NoName"
+                Log.d("PassengerName", fullname)
+                tvPassengerName.text = fullname
 
-                var seats = ""
-                if (passengerdata!!.subPassengers?.size != 0) {
-                    for (i in passengerdata.subPassengers!!) {
-                        seats += i.seat + " "
-                    }
-                }
-                tvSeatNo.text = seats
+
+
+                val seatNo = passengerdata.seat ?: "-"
+                tvSeatNo.text = seatNo
+
+
+
 
                 if (passengerdata.isPickup!!)
                     imgPassengerInOutStatus.setImageResource(R.drawable.ic_seater)

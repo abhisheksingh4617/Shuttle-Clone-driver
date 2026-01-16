@@ -20,15 +20,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.phone.SmsRetriever
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
-import com.google.gson.Gson
-import com.shuttleclone.driver.ui.Activity.SignInActivity.Companion.phoneAuthCredential
-import com.shuttleclone.driver.ui.Activity.SignInActivity.Companion.resendToken
 import com.shuttleclone.driver.Model.UserDetail
 import com.shuttleclone.driver.R
 import com.shuttleclone.driver.Util.*
@@ -56,18 +47,10 @@ class VerificationActivity : BaseActivity(), View.OnClickListener {
     private var phone = ""
     private var countryCode = "91"
     private var countryDetails = ""
-    private var isMobileVerified = false
     private var userDetail: UserDetail? = null
     private val TAG = "VerificationActivity"
     private val mainViewModel: MainViewModel by viewModels()
     var smsBroadcastReceiver: SmsBroadcastReceiver? = null
-    // get reference of the firebase auth
-    lateinit var auth: FirebaseAuth
-    // we will use this to match the sent otp from firebase
-    lateinit var fbVerificationId: String
-    private var isVerificationComplete = false
-//    lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
-    private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
     override fun onResume() {
         super.onResume()
@@ -78,7 +61,6 @@ class VerificationActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         LocaleManager().setLocale(this)
         setContentView(R.layout.activity_verification)
-        auth=FirebaseAuth.getInstance()
         initLayouts()
         initializeListeners()
         startSmsUserConsent()
@@ -148,18 +130,6 @@ class VerificationActivity : BaseActivity(), View.OnClickListener {
             phone = intent.getStringExtra("phone").toString()
             countryCode = intent.getStringExtra("country_code").toString()
             countryDetails = intent.getStringExtra("country_details").toString()
-
-            fbVerificationId= intent.getStringExtra("fbVerificationId").toString()
-
-            // get fbVerificationId from the intent
-            fbVerificationId = intent.getStringExtra("fbVerificationId").toString()
-            isVerificationComplete = intent.getBooleanExtra("verification_complete", false)
-
-            initializeFirebaseAuth()
-
-            if (isVerificationComplete && (null != phoneAuthCredential))
-                verifyWithFbOTP("123456", phoneAuthCredential)
-
         }
     }
 
@@ -198,78 +168,12 @@ class VerificationActivity : BaseActivity(), View.OnClickListener {
         }*/
 
         mTvResend!!.setOnClickListener {
-            // Firebase Resend OTP
-            if (resendToken == null) {
-                Toast.makeText(this, "resendToken is null", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            startTimer()
-            resendVerificationCode(phone,resendToken)
-
-//            reSendOTP()
+            // Backend Resend OTP
+            reSendOTP()
         }
     }
 
 
-    private fun initializeFirebaseAuth() {
-        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                LoadingDialog.cancelLoading()
-                myLog(TAG, "onVerificationCompleted Success")
-                myLog(TAG, "onVerificationCompleted credential=${Gson().toJson(credential)}")
-                phoneAuthCredential = credential
-                verifyWithFbOTP("123456", phoneAuthCredential)
-
-            }
-
-            override fun onVerificationFailed(e: FirebaseException) {
-                myLog(TAG, "onVerificationFailed  $e")
-                LoadingDialog.cancelLoading()
-                alertDialog(this@VerificationActivity,"${e.localizedMessage}")
-            }
-
-            override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
-                myLog(TAG, "onCodeSent: $verificationId")
-                fbVerificationId = verificationId
-                resendToken = token
-                LoadingDialog.cancelLoading()
-            }
-        }
-    }
-
-    private fun verifyWithFbOTP(otp: String, credential: PhoneAuthCredential) {
-        LoadingDialog.showLoadingDialog(this, getString(R.string.pls_wait_loading))
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    LoadingDialog.cancelLoading()
-                    isMobileVerified=true
-                    verifyOTP(otp.toInt())
-                } else {
-                    isMobileVerified=false
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        // The verification code entered was invalid
-                        Toast.makeText(this, getString(R.string.invalid_otp), Toast.LENGTH_SHORT).show()
-                        LoadingDialog.cancelLoading()
-                    }
-                }
-            }
-
-    }
-
-
-    private fun resendVerificationCode(phoneNumber: String, token: PhoneAuthProvider.ForceResendingToken) {
-        LoadingDialog.showLoadingDialog(this@VerificationActivity,getString(R.string.pls_wait_loading))
-        val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(phoneNumber)
-            .setTimeout(0L, TimeUnit.SECONDS)
-            .setActivity(this)
-            .setCallbacks(callbacks)
-            .setForceResendingToken(token)
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
-    }
 
     private fun startTimer() {
         hideView(mTvResend!!)
@@ -326,15 +230,7 @@ class VerificationActivity : BaseActivity(), View.OnClickListener {
         }
         if (v === mLlVerify) {
             if (validate()) {
-//                verifyOTP(getOtp())
-                if (fbVerificationId != "") {
-                    val credential : PhoneAuthCredential = PhoneAuthProvider.getCredential(fbVerificationId, getOtp().toString())
-                    verifyWithFbOTP(getOtp().toString(),credential)
-                } else {
-                    toast(this, getString(R.string.something_wrong))
-                    finish()
-                }
-
+                verifyOTP(getOtp())
             }
         }
     }
@@ -343,7 +239,8 @@ class VerificationActivity : BaseActivity(), View.OnClickListener {
         try {
             if (isInternetConnection(this)) {
                 LoadingDialog.showLoadingDialog(this, getString(R.string.pls_wait_loading))
-                mainViewModel!!.verifyOTP(getPreference(this, AppConstants.TOKEN)!!,getPreference(this, AppConstants.DEVICE_TOKEN).toString(), OTP,isMobileVerified)
+                // isMobileVerified is set to false since we're not using Firebase anymore
+                mainViewModel!!.verifyOTP(getPreference(this, AppConstants.TOKEN)!!,getPreference(this, AppConstants.DEVICE_TOKEN).toString(), OTP,false)
                     .observe(this, androidx.lifecycle.Observer {
                         LoadingDialog.cancelLoading()
                         if (it == null){

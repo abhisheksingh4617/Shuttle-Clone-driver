@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/app_background"
-    android:orientation="vertical">
+    android:background="@color/app_background">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/view_height"
-        android:background="@drawable/bg_toolbar" />
-
+    <!-- Toolbar At the Top -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -19,7 +15,8 @@
         android:background="@drawable/bg_toolbar"
         android:theme="@style/Toolbar"
         app:contentInsetStart="0dp"
-        app:titleTextColor="@color/white">
+        app:titleTextColor="@color/white"
+        android:elevation="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -42,85 +39,72 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/spacing_medium"
-                android:layout_toEndOf="@+id/ivBack"
+                android:layout_toEndOf="@id/ivBack"
                 android:fontFamily="@font/googlesansextrabold"
                 android:text="@string/lbl_bus_routes"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_mlarge" />
-            <include
-                layout="@layout/layout_addnotification" />
-        </RelativeLayout>
 
+            <include layout="@layout/layout_addnotification" />
+        </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:id="@+id/rlCard"
+    <!-- MapView fills the whole background -->
+        <com.google.android.gms.maps.MapView
+        android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+            android:layout_marginTop="?attr/actionBarSize" />
+    <!-- Sliding stops panel: BottomSheet -->
+    <LinearLayout
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_card"
         android:orientation="vertical"
-        android:overScrollMode="never"
-        android:weightSum="1">
+        android:elevation="8dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapview"
+        <TextView
+            android:id="@+id/tvEta"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4" />
+            android:layout_height="wrap_content"
+            android:text="ETA"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:padding="12dp"
+            android:gravity="center"
+            android:background="@color/white"
+            android:layout_marginBottom="4dp"/>
 
-        <RelativeLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvBusRoutes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.6"
-            android:descendantFocusability="blocksDescendants">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_xsmall"
+            app:cardElevation="@dimen/card_shadow">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvBusRoutes"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvStopName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_xsmall"
-                app:cardElevation="@dimen/card_shadow">
+                android:layout_margin="@dimen/spacing_medium"
+                android:fontFamily="@font/googlesansbold"
+                android:drawableLeft="@drawable/bus_stop_pin"
+                android:padding="@dimen/spacing_small"
+                android:text="@string/title_stopes_details"
+                android:gravity="center"
+                android:textColor="@color/textheader"
+                android:textSize="@dimen/font_large" />
+        </androidx.cardview.widget.CardView>
 
-                <TextView
-                    android:id="@+id/tvStopName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/spacing_medium"
-                    android:fontFamily="@font/googlesansbold"
-                    android:drawableLeft="@drawable/bus_stop_pin"
-                    android:padding="@dimen/spacing_small"
-                    android:text="@string/title_stopes_details"
-                    android:gravity="center"
-                    android:textColor="@color/textheader"
-                    android:textSize="@dimen/font_large" />
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvBusRoutes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/cvBusRoutes"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
-                tools:listitem="@layout/layout_bus_stops_info"
-                 />
-        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBusRoutes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="true"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            tools:listitem="@layout/layout_bus_stops_info" />
     </LinearLayout>
-</RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

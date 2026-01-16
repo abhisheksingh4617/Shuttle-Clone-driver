@@ -25,6 +25,14 @@ data class PassengerDataItem(
     @field:SerializedName("user_phone")
     val userPhone: String? = null,
 
+    @field:SerializedName("fullname")
+    val fullname: String? = null,
+
+    @field:SerializedName("seat")
+    val seat: String? = null,
+
+
+
     @field:SerializedName("travel_status")
     val travelStatus: String? = null,
 

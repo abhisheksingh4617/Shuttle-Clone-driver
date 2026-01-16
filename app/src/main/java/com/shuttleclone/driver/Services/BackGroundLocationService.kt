@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.*
+import okhttp3.*
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import com.shuttleclone.driver.ui.Activity.MainActivity
@@ -17,6 +18,7 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONException
 
 import java.text.DecimalFormat
@@ -27,6 +29,7 @@ class BackGroundLocationService : Service(), ConnectionCallbacks,
     OnConnectionFailedListener, LocationListener {
 
     private val TAG = "BGLocationService"
+    private val mainHandler = Handler(Looper.getMainLooper())
     var mLocationRequest: LocationRequest? = null
     var mGoogleApiClient: GoogleApiClient? = null
 
@@ -215,37 +218,59 @@ class BackGroundLocationService : Service(), ConnectionCallbacks,
     }
 
     private fun updateDriverLiveLocation(location: Location) {
-        /*try {
-            if (isNetworkAvailable(this)) {
-                myLog(TAG, "updateDriverLiveLocation: angle=${location.bearing}")
-                myLog(TAG, "updateDriverLiveLocation: IS_BOOKING_ASSIGNED=${isPreference(this,AppConstants.IS_BOOKING_ASSIGNED)}")
-                myLog(TAG, "updateDriverLiveLocation: IS_TRIP_STARTED=${isPreference(this,AppConstants.IS_TRIP_STARTED)}")
-                if (isPreference(this,AppConstants.IS_BOOKING_ASSIGNED) && isPreference(this,AppConstants.IS_TRIP_STARTED))
+        try {
+            if (!isNetworkAvailable(this)) return
 
-                    RetrofitClient.getClient()
-                        .updateTrackingStatus(
-                            getPreference(this, AppConstants.TOKEN)!!,
-                            getPreference(this,AppConstants.ASSIGNED_ID).toString(),
-                            "RIDING",
-                            "${location.latitude}",
-                            "${location.longitude}",
-                            "${location.bearing}"
-                        ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(object : DisposableSingleObserver<TrackingStatusResponse?>() {
-                            override fun onSuccess(response: TrackingStatusResponse) {
-                                myLog(TAG, "locationChanged: Response=${Gson().toJson(response)}")
-//                                LiveUpdate.updateTrackStatus.postValue(response)
-                            }
+            val token = getPreference(this, AppConstants.TOKEN) ?: return
+            val assignedId = getPreference(this, AppConstants.ASSIGNED_ID) ?: ""
 
-                            override fun onError(e: Throwable) {
-                                myLog(TAG, "onError: locationChanged=" + e.localizedMessage)
-                            }
-                        })
+            val json = org.json.JSONObject().apply {
+                put("assignedId", assignedId)
+                put("status", "RIDING")
+                put("latitude", location.latitude)
+                put("longitude", location.longitude)
+                put("bearing", location.bearing)
+                put("speed", location.speed)
             }
+
+            val client = okhttp3.OkHttpClient()
+            val requestBody = okhttp3.RequestBody.create(
+                "application/json".toMediaTypeOrNull(),
+                json.toString()
+            )
+
+            val request = okhttp3.Request.Builder()
+                .url("https://yourapi.com/api/tracking-status")  // अपना Backend URL
+                .addHeader("Authorization", "Bearer $token")
+                .post(requestBody)
+                .build()
+
+            client.newCall(request).enqueue(object : okhttp3.Callback {
+                override fun onFailure(call: okhttp3.Call, e: java.io.IOException) {
+                    // ✅ Handler use करें - NO runOnUiThread
+                    mainHandler.post {
+                        myLog(TAG, "❌ Location API failed: ${e.message}")
+                    }
+                }
+
+                override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                    mainHandler.post {
+                        myLog(TAG, "✅ LIVE LOCATION SENT: ${location.latitude}, ${location.longitude}")
+                    }
+                }
+            })
+
         } catch (e: Exception) {
-            myLog(TAG, "updateDriverLiveLocation: Error=${e.localizedMessage}")
-        }*/
+            mainHandler.post {
+                myLog(TAG, "Live tracking error: ${e.localizedMessage}")
+            }
+        }
     }
+
+
+
+
+
 
     companion object {
         private const val INTERVAL = 5000.toLong()

@@ -22,18 +22,11 @@ import com.shuttleclone.driver.Util.*
 import com.shuttleclone.driver.ViewModel.MainViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.gson.Gson
 import com.hbb20.CountryCodePicker
 import java.util.*
 import com.shuttleclone.driver.Util.AppConstants.COUNTRY_CODE
 import org.json.JSONObject
-import java.util.concurrent.TimeUnit
 import com.shuttleclone.driver.R
 
 class SignInActivity : BaseActivity(), View.OnClickListener {
@@ -62,13 +55,6 @@ class SignInActivity : BaseActivity(), View.OnClickListener {
     private var revealY = 0
 
     private var verificationIntent: Intent? = null
-
-    // create instance of firebase auth
-    lateinit var auth: FirebaseAuth
-
-    // we will use this to match the sent otp from firebase
-    lateinit var fbVerificationId: String
-    private lateinit var callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
     private val phoneNumberHintIntentResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
         registerForActivityResult(
@@ -104,8 +90,6 @@ class SignInActivity : BaseActivity(), View.OnClickListener {
         initLayouts()
         initializeListeners()
         fCMToken
-        initializeFirebaseAuth()
-        auth = FirebaseAuth.getInstance()
         // explode animation on activity start.
         explodeAnim(savedInstanceState, intent)
 
@@ -220,68 +204,11 @@ class SignInActivity : BaseActivity(), View.OnClickListener {
     }
 
 
-    private fun initializeFirebaseAuth() {
-        // Callback function for Phone Auth
-        callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
-            // This method is called when the verification is completed
-            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                myLog("GFG", "onVerificationCompleted Success")
-                myLog("GFG", "onVerificationCompleted credential=${Gson().toJson(credential)}")
-
-                LoadingDialog.cancelLoading()
-                phoneAuthCredential = credential
-                if (verificationIntent != null) {
-                    verificationIntent!!.putExtra("fbVerificationId", "")
-                    verificationIntent!!.putExtra("verification_complete", true)
-                    startActivity(verificationIntent)
-                }
-            }
-
-            // Called when verification is failed add log statement to see the exception
-            override fun onVerificationFailed(e: FirebaseException) {
-                myLog("GFG", "onVerificationFailed  $e")
-                LoadingDialog.cancelLoading()
-                alertDialog(this@SignInActivity,"${e.localizedMessage}")
-            }
-            override fun onCodeSent(
-                verificationId: String,
-                token: PhoneAuthProvider.ForceResendingToken
-            ) {
-                myLog("GFG", "onCodeSent: $verificationId")
-                fbVerificationId = verificationId
-                resendToken = token
-
-                LoadingDialog.cancelLoading()
-
-                if (verificationIntent != null) {
-                    verificationIntent!!.putExtra("fbVerificationId", fbVerificationId)
-                    verificationIntent!!.putExtra("verification_complete", false)
-                    startActivity(verificationIntent)
-                }
-            }
-        }
-    }
-
-    private fun sendVerificationCode(number: String) {
-        myLog("GFG", "number=$number")
-        val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(number)
-            .setTimeout(0L, TimeUnit.SECONDS)
-            .setActivity(this)
-            .setCallbacks(callbacks)
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
-    }
 
     /* validation */
     private fun validate(): Boolean {
-        var flag = true
-        if (mEdMobileNumber!!.text.toString().length != 10) {
-            flag = false
-            showToast(getString(R.string.msg_mobile_number))
-        }
-        return flag
+        // Allow any phone number - validation removed as per requirement
+        return mEdMobileNumber!!.text.toString().isNotEmpty()
     }
 
     /* onClick listener */
@@ -374,7 +301,8 @@ class SignInActivity : BaseActivity(), View.OnClickListener {
                                 verificationIntent!!.putExtra("country_code", mCcp!!.selectedCountryCode)
                                 verificationIntent!!.putExtra("country_details", countryDetails)
 
-                                sendVerificationCode(mCcp!!.selectedCountryCodeWithPlus+"${mEdMobileNumber!!.text}")
+                                // Start VerificationActivity - OTP is sent by backend
+                                startActivity(verificationIntent)
 
                             } else {
                                 LoadingDialog.cancelLoading()
@@ -450,8 +378,6 @@ class SignInActivity : BaseActivity(), View.OnClickListener {
 
     companion object {
         private const val RC_SIGN_IN = 150
-        lateinit var resendToken: PhoneAuthProvider.ForceResendingToken
-        lateinit var phoneAuthCredential: PhoneAuthCredential
     }
 
     // explode animation on activity start.
