@@ -1,5 +1,7 @@
 package com.shuttleclone.driver.ui.Activity
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -46,8 +48,8 @@ class StopsPassengerListActivity : BaseActivity() {
     var stopTime = ""
     var passengersIn = ""
     var passengersOut = ""
-    var bookings=ArrayList<String>()
-    var stopsData:StopsItem? = null
+    var bookings = ArrayList<String>()
+    var stopsData: StopsItem? = null
 
     override fun onResume() {
         super.onResume()
@@ -61,21 +63,20 @@ class StopsPassengerListActivity : BaseActivity() {
 
         try {
             if (intent != null) {
-
                 stopsData = intent.getSerializableExtra("stopsData") as StopsItem
                 routeId = intent.getStringExtra("routeId").toString()
                 stopTime = intent.getStringExtra("stopTime").toString()
                 bookingDate = intent.getStringExtra("bookingDate").toString()
                 type = intent.getStringExtra("type").toString()
 
-                if (null!=stopsData) {
+                if (null != stopsData) {
                     stopId = stopsData!!.id.toString()
                     stopName = stopsData!!.name.toString()
                     passengersIn = stopsData!!.pickupCount.toString()
                     passengersOut = stopsData!!.dropCount.toString()
 
-                    if(type.equals("pickup"))
-                      bookings = stopsData!!.pickupBookings!!
+                    if (type.equals("pickup"))
+                        bookings = stopsData!!.pickupBookings!!
                     else bookings = stopsData!!.dropBookings!!
                 }
                 Log.i(TAG, "onCreate: bookings=$bookings")
@@ -111,8 +112,6 @@ class StopsPassengerListActivity : BaseActivity() {
             tvNoOfPassenger!!.text = passengersIn
             tvNoOfOutPassenger!!.text = passengersOut
 
-
-
             ivBack!!.setOnClickListener { finish() }
             ivNotification!!.setOnClickListener { startActivity(NotificationActivity::class.java) }
         } catch (e: Exception) {
@@ -122,7 +121,6 @@ class StopsPassengerListActivity : BaseActivity() {
     }
 
     private fun handelViewModel() {
-
         if (isInternetConnection(this)) {
             LoadingDialog.showLoadingDialog(this, getString(R.string.pls_wait_loading))
             mainViewModel!!.getPassengersDetails(
@@ -139,7 +137,7 @@ class StopsPassengerListActivity : BaseActivity() {
                         return@Observer
                     }
 
-                    if (null!=it.errorResponse){
+                    if (null != it.errorResponse) {
                         alertDialog(this, it.errorResponse.message.toString())
                         return@Observer
                     }
@@ -158,27 +156,42 @@ class StopsPassengerListActivity : BaseActivity() {
                 }
             })
         } else toast(this)
-
     }
 
+    // UPDATED FUNCTION: Correctly initializes the adapter with a click lambda
     private fun setDataToAdapter(data: List<PassengerDataItem>?) {
-        try {
-            if (data!!.size > 0) {
-                passengerListAdapter = PassengerListAdapter(baseContext, data, this)
-                rvPassengerList!!.apply {
-                    layoutManager = LinearLayoutManager(this@StopsPassengerListActivity)
-                    setHasFixedSize(true)
-                    adapter = passengerListAdapter
-                }
-                RunLayoutAnimation(this, rvPassengerList!!)
-            } else {
-                showView(layNoPassengerAvailable!!)
-                hideView(rvPassengerList!!)
-            }
-        } catch (e: Exception) {
-            myLog(TAG, "setDataToAdapter: Error=${e.localizedMessage}")
+        if (data.isNullOrEmpty()) {
+            showView(layNoPassengerAvailable!!)
+            hideView(rvPassengerList!!)
+            return
         }
 
+        // USE 'this@StopsPassengerListActivity' NOT 'baseContext'
+        passengerListAdapter = PassengerListAdapter(this@StopsPassengerListActivity, data) { phoneNumber ->
+            myLog(TAG, "Initiating call to: $phoneNumber") // Check your Logcat to see if this prints
+            makePhoneCall(phoneNumber)
+        }
+
+        rvPassengerList?.apply {
+            layoutManager = LinearLayoutManager(this@StopsPassengerListActivity)
+            setHasFixedSize(true)
+            adapter = passengerListAdapter
+        }
+        RunLayoutAnimation(this, rvPassengerList!!)
     }
 
+    // NEW FUNCTION: Handles the actual dialing of the phone number
+    private fun makePhoneCall(number: String) {
+        try {
+            if (number.isNotEmpty()) {
+                val intent = Intent(Intent.ACTION_DIAL)
+                intent.data = Uri.parse("tel:$number")
+                startActivity(intent)
+            } else {
+                toast(this, "Phone number not available")
+            }
+        } catch (e: Exception) {
+            myLog(TAG, "makePhoneCall: Error=${e.localizedMessage}")
+        }
+    }
 }

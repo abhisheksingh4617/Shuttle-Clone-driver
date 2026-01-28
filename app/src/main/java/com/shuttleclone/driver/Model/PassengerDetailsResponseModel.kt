@@ -3,7 +3,6 @@ package com.shuttleclone.driver.Model
 import com.google.gson.annotations.SerializedName
 
 data class PassengerDetailsResponseModel(
-
     @field:SerializedName("data")
     val data: List<PassengerDataItem>? = null,
 
@@ -18,26 +17,35 @@ data class PassengerDetailsResponseModel(
 )
 
 data class PassengerDataItem(
-
     @field:SerializedName("is_drop")
     val isDrop: Boolean? = null,
 
     @field:SerializedName("user_phone")
     val userPhone: String? = null,
 
+    // ADDED: Fallback for phone
+    @field:SerializedName("phone")
+    val phone: String? = null,
+
+    // ADDED: Fallback for mobile
+    @field:SerializedName("mobile")
+    val mobile: String? = null,
+
     @field:SerializedName("fullname")
     val fullname: String? = null,
+
+    @field:SerializedName("user_fullname")
+    val userFullName: String? = null,
+
+    // ADDED: Fallback for name
+    @field:SerializedName("name")
+    val name: String? = null,
 
     @field:SerializedName("seat")
     val seat: String? = null,
 
-
-
     @field:SerializedName("travel_status")
     val travelStatus: String? = null,
-
-    @field:SerializedName("user_fullname")
-    val userFullName: String? = null,
 
     @field:SerializedName("passengers")
     val subPassengers: List<SubPassengersItem>? = null,
@@ -47,7 +55,6 @@ data class PassengerDataItem(
 )
 
 data class SubPassengersItem(
-
     @field:SerializedName("seat")
     val seat: String? = null,
 

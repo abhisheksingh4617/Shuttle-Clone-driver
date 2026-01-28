@@ -30,10 +30,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:padding="@dimen/spacing_medium"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:focusable="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="@dimen/spacing_medium"
                 android:src="@drawable/ic_left_arrow_white" />
 
             <TextView
@@ -47,8 +47,8 @@
                 android:text="@string/lbl_passenger_list"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_mlarge" />
-            <include
-                layout="@layout/layout_addnotification" />
+
+            <include layout="@layout/layout_addnotification" />
 
         </RelativeLayout>
 
@@ -63,7 +63,7 @@
         android:orientation="vertical"
         android:overScrollMode="never">
 
-        <include layout="@layout/layout_bus_stops_info"/>
+        <include layout="@layout/layout_bus_stops_info" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cvBusRoutes"
@@ -90,10 +90,10 @@
             android:id="@+id/rvPassengerList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/layout_passenger_list_item"
             android:background="@drawable/bg_card"
             android:padding="@dimen/_5sdp"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            tools:listitem="@layout/layout_passenger_list_item" />
 
         <LinearLayout
             android:id="@+id/layNoPassengerAvailable"
@@ -119,7 +119,5 @@
                 android:textSize="@dimen/font_normal" />
 
         </LinearLayout>
-
-
     </LinearLayout>
 </RelativeLayout>

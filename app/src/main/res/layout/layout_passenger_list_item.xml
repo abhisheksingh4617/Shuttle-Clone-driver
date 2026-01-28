@@ -1,68 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layPassengerItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/layPassengerItem"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/spacing_small"
     android:background="@drawable/border"
-    android:gravity="center"
-    android:clickable="true"
-    android:orientation="horizontal">
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/tvPassengerName"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_small"
-        android:layout_weight="0.1"
-        android:drawableLeft="@drawable/ic_baseline_phone_24"
+        android:layout_weight="1"
+
         android:drawablePadding="@dimen/spacing_small"
         android:drawableTint="@color/colorPrimaryDark"
         android:fontFamily="@font/googlesansbold"
-        android:gravity="center|left"
+        android:gravity="center_vertical|start"
         android:padding="@dimen/spacing_medium"
-        android:text="Ram (25)"
+        android:text="Passenger Name"
         android:textColor="@color/textheader"
         android:textSize="@dimen/font_large" />
+
+    <LinearLayout
+        android:id="@+id/layCallDriver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_square"
+        android:backgroundTint="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="8dp"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_baseline_phone_24"
+            app:tint="@color/white" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvSeatNo"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/spacing_small"
-        android:drawableLeft="@drawable/ic_bus_seat"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:drawableStart="@drawable/ic_bus_seat"
+        android:drawablePadding="4dp"
         android:drawableTint="@color/colorPrimaryDark"
         android:fontFamily="@font/googlesansbold"
-        android:gravity="center|left"
-        android:padding="@dimen/spacing_small"
+        android:gravity="center"
         android:text="D5"
         android:textColor="@color/textheader"
         android:textSize="@dimen/font_large" />
 
-
     <ImageView
         android:id="@+id/imgPassengerInOutStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_margin="1dp"
-        android:padding="@dimen/_8sdp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="8dp"
         android:src="@drawable/ic_seater"
-        app:tint="@color/colorPrimaryDark"/>
+        app:tint="@color/colorPrimaryDark" />
 
     <ImageView
         android:id="@+id/imgPassengerStatus"
-        app:tint="@color/white"
-        android:layout_width="wrap_content"
+        android:layout_width="45dp"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_margin="1dp"
         android:background="@color/dark_gray"
-        android:padding="@dimen/_8sdp"
-        android:src="@drawable/ic_baseline_check_24" />
-
+        android:padding="8dp"
+        android:src="@drawable/ic_baseline_check_24"
+        app:tint="@color/white" />
 
 </LinearLayout>
-
-
