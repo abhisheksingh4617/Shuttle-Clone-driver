@@ -341,6 +341,8 @@ class ActiveRideDetailsActivity : BaseActivity(), ToolTipView.OnToolTipViewClick
                             savePreference(this, AppConstants.ASSIGNED_ID, "")
                             savePreference(this, AppConstants.IS_TRIP_STARTED, false)
                             savePreference(this, AppConstants.IS_TRIP_STARTED, false)
+                            // Reset passenger onboard flag when trip is completed
+                            savePreference(this, AppConstants.IS_PASSENGER_ONBOARDED, false)
                         }
 
                         updateView(it.data!!.tripStatus)
@@ -573,6 +575,8 @@ class ActiveRideDetailsActivity : BaseActivity(), ToolTipView.OnToolTipViewClick
                     }
 
                     if (it.isStatus) {
+                        // Mark that at least one passenger is onboarded for this trip
+                        savePreference(this, AppConstants.IS_PASSENGER_ONBOARDED, true)
                         toast(this, it.message)
                     } else alertDialog(this, it.message.toString())
                 })

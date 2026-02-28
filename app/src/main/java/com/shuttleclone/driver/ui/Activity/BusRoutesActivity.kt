@@ -2,6 +2,7 @@ package com.shuttleclone.driver.ui.Activity
 
 import android.animation.ValueAnimator
 import android.graphics.Color
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -21,8 +22,12 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.PolyUtil
 import com.shuttleclone.driver.Model.RoutesItem
+import com.shuttleclone.driver.Model.StopsItem
 import com.shuttleclone.driver.R
+import com.shuttleclone.driver.Util.AppConstants
 import com.shuttleclone.driver.Util.LiveUpdate
+import com.shuttleclone.driver.Util.getPreference
+import com.shuttleclone.driver.Util.isPreference
 import com.shuttleclone.driver.ui.Adapters.ViewStopsAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +55,15 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
     // SMOOTH SCROLLER
     private lateinit var smoothScroller: LinearSmoothScroller
 
+    // Track whether we already adjusted the route to the "next stop" only
+    private var hasAdjustedToNextStopRoute: Boolean = false
+
+    // Whether at least one passenger is onboarded for this trip
+    private var isPassengerOnboard: Boolean = false
+
+    // Last GPS location used to compute smooth bearing like Google Maps
+    private var lastLocationLatLng: LatLng? = null
+
     // Replace with your actual key
     private val GOOGLE_MAPS_API_KEY = "AIzaSyAmB3N1lgruRy6NsYHNb9xGMm-_E7sf1CU"
 
@@ -74,6 +88,9 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
             override fun getVerticalSnapPreference(): Int = SNAP_TO_START
         }
 
+        // Check if we already have an onboarded passenger for this trip
+        isPassengerOnboard = isPreference(this, AppConstants.IS_PASSENGER_ONBOARDED)
+
         if (intent != null) {
             try {
                 tripsData = intent.getSerializableExtra("tripsData") as RoutesItem
@@ -91,9 +108,32 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
         map = gmap
         map?.uiSettings?.isMapToolbarEnabled = false
         map?.uiSettings?.isZoomControlsEnabled = false
+        // Keep navigation orientation always forward-facing like Google Maps
+        map?.uiSettings?.isRotateGesturesEnabled = false
         map?.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
         if (tripsData?.stops?.isNotEmpty() == true) {
-            fetchAndDrawRoute()
+            // If passenger is already onboarded, directly show navigation to next stop only;
+            // otherwise show full route.
+            if (isPassengerOnboard) {
+                val latStr = getPreference(this, AppConstants.DRIVER_LATITUDE)?.toString()
+                val lngStr = getPreference(this, AppConstants.DRIVER_LONGITUDE)?.toString()
+                if (!latStr.isNullOrBlank() && !lngStr.isNullOrBlank()) {
+                    try {
+                        val currentLat = latStr.toDouble()
+                        val currentLng = lngStr.toDouble()
+                        val currentLatLng = LatLng(currentLat, currentLng)
+                        fetchAndDrawRouteToNextStop(currentLatLng)
+                    } catch (e: Exception) {
+                        // Fallback to full route if parsing fails
+                        fetchAndDrawRoute()
+                    }
+                } else {
+                    // No stored driver location, fallback to full route
+                    fetchAndDrawRoute()
+                }
+            } else {
+                fetchAndDrawRoute()
+            }
         }
     }
 
@@ -117,6 +157,8 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
                 "&destination=$destination" +
                 (if (waypoints.isNotEmpty()) "&waypoints=optimize:false|$waypoints" else "") +
                 "&mode=driving" +
+                // Use traffic-aware routing
+                "&departure_time=now" +
                 "&key=$GOOGLE_MAPS_API_KEY"
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -133,19 +175,30 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
                         val overviewPolyline = routeObj.getJSONObject("overview_polyline").getString("points")
                         val legs = routeObj.getJSONArray("legs")
                         var totalDurationSeconds = 0
+                        var totalTrafficSeconds = 0
                         for (i in 0 until legs.length()) {
                             val leg = legs.getJSONObject(i)
                             val duration = leg.getJSONObject("duration")
                             totalDurationSeconds += duration.getInt("value")
+
+                            // Prefer traffic-adjusted duration when available
+                            val durationInTraffic =
+                                leg.optJSONObject("duration_in_traffic")?.optInt("value")
+                            totalTrafficSeconds += durationInTraffic ?: duration.getInt("value")
                         }
                         val totalDurationMinutes = totalDurationSeconds / 60
                         val etaText = "ETA: $totalDurationMinutes mins"
+
+                        val trafficRatio =
+                            if (totalDurationSeconds > 0) totalTrafficSeconds.toFloat() / totalDurationSeconds.toFloat()
+                            else 1f
+                        val trafficColor = getTrafficColor(trafficRatio)
 
                         val routePointsDecoded: List<LatLng> = PolyUtil.decode(overviewPolyline)
                         withContext(Dispatchers.Main) {
                             if (routePointsDecoded.isNotEmpty()) {
                                 routePoints = routePointsDecoded
-                                drawRouteOnMap(routePointsDecoded, true)
+                                drawRouteOnMap(routePointsDecoded, true, trafficColor)
                                 tvEta.text = etaText
                             }
                         }
@@ -170,6 +223,8 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
                 "&destination=$destination" +
                 (if (waypoints.isNotEmpty()) "&waypoints=optimize:false|$waypoints" else "") +
                 "&mode=driving" +
+                // Use traffic-aware routing
+                "&departure_time=now" +
                 "&key=$GOOGLE_MAPS_API_KEY"
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -186,19 +241,29 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
                         val overviewPolyline = routeObj.getJSONObject("overview_polyline").getString("points")
                         val legs = routeObj.getJSONArray("legs")
                         var totalDurationSeconds = 0
+                        var totalTrafficSeconds = 0
                         for (i in 0 until legs.length()) {
                             val leg = legs.getJSONObject(i)
                             val duration = leg.getJSONObject("duration")
                             totalDurationSeconds += duration.getInt("value")
+
+                            val durationInTraffic =
+                                leg.optJSONObject("duration_in_traffic")?.optInt("value")
+                            totalTrafficSeconds += durationInTraffic ?: duration.getInt("value")
                         }
                         val totalDurationMinutes = totalDurationSeconds / 60
                         val etaText = "ETA: $totalDurationMinutes mins"
+
+                        val trafficRatio =
+                            if (totalDurationSeconds > 0) totalTrafficSeconds.toFloat() / totalDurationSeconds.toFloat()
+                            else 1f
+                        val trafficColor = getTrafficColor(trafficRatio)
 
                         val newRoutePoints: List<LatLng> = PolyUtil.decode(overviewPolyline)
                         withContext(Dispatchers.Main) {
                             if (newRoutePoints.isNotEmpty()) {
                                 routePoints = newRoutePoints
-                                drawRouteOnMap(newRoutePoints, false)
+                                drawRouteOnMap(newRoutePoints, false, trafficColor)
                                 tvEta.text = etaText
                             }
                         }
@@ -210,7 +275,12 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun drawRouteOnMap(routePointsParam: List<LatLng>, clearMap: Boolean = true) {
+    private fun drawRouteOnMap(
+        routePointsParam: List<LatLng>,
+        clearMap: Boolean = true,
+        trafficColor: Int = Color.BLUE,
+        polylineWidth: Float = 12f
+    ) {
         if (routePointsParam.isEmpty()) return
         if (clearMap) {
             map?.clear()
@@ -246,8 +316,10 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         val polylineOptions = PolylineOptions()
             .addAll(routePointsParam)
-            .width(5f)
-            .color(Color.RED)
+            // Thicker line for better visibility
+            .width(polylineWidth.coerceAtLeast(14f))
+            // Color reflects current traffic conditions
+            .color(trafficColor)
         currentPolyline = map?.addPolyline(polylineOptions)
 
         // Camera bounds (see all markers+route)
@@ -295,10 +367,10 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
                 valueAnimator.start()
             }
 
-            // Calculate bearing (angle) using next route point if available
-            val nextIndex = routePointsParam.indexOfFirst { it == currentLatLng } + 1
-            val nextLatLng = if (nextIndex in routePointsParam.indices) routePointsParam[nextIndex] else null
-            val bearing = if (nextLatLng != null) getBearing(currentLatLng, nextLatLng) else 0f
+            // Calculate bearing based on last GPS location so that navigation
+            // orientation always remains forward-facing (like Google Maps)
+            val previousLatLng = lastLocationLatLng ?: currentLatLng
+            val bearing = getBearing(previousLatLng, currentLatLng)
 
             map?.animateCamera(
                 CameraUpdateFactory.newCameraPosition(
@@ -311,11 +383,24 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
                 )
             )
 
+            // Remember last GPS location for next bearing calculation
+            lastLocationLatLng = currentLatLng
+
+            // Once passenger is onboard, switch route to only the "next stop"
+            // so that previous segments of the full route are hidden and focus stays ahead.
+            if (isPassengerOnboard && !hasAdjustedToNextStopRoute) {
+                hasAdjustedToNextStopRoute = true
+                fetchAndDrawRouteToNextStop(currentLatLng)
+            }
+
+            // If the driver goes off the suggested path, recompute route from current position
             if (!PolyUtil.isLocationOnPath(
                     currentLatLng,
                     routePointsParam,
                     false,
-                    30.0)) {
+                    30.0
+                )
+            ) {
                 fetchAndDrawRouteFrom(currentLatLng)
             }
         })
@@ -338,6 +423,121 @@ class BusRoutesActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onPause() { super.onPause(); mapView?.onPause() }
     override fun onDestroy() { super.onDestroy(); mapView?.onDestroy() }
     override fun onLowMemory() { super.onLowMemory(); mapView?.onLowMemory() }
+
+    /**
+     * Decide polyline color based on how much slower traffic is compared to normal.
+     * trafficRatio ~= 1   -> Free flowing (Blue)
+     * trafficRatio < 1.4  -> Moderate (Orange)
+     * trafficRatio >= 1.4 -> Heavy (Red)
+     */
+    private fun getTrafficColor(trafficRatio: Float): Int {
+        return when {
+            trafficRatio < 1.1f -> Color.BLUE
+            trafficRatio < 1.4f -> Color.parseColor("#FFA500") // Orange
+            else -> Color.RED
+        }
+    }
+
+    /**
+     * Compute distance between two LatLngs in meters.
+     */
+    private fun distanceBetween(a: LatLng, b: LatLng): Float {
+        val results = FloatArray(1)
+        Location.distanceBetween(a.latitude, a.longitude, b.latitude, b.longitude, results)
+        return results[0]
+    }
+
+    /**
+     * Get the next logical stop based on current location.
+     * We approximate "next" as the nearest stop ahead of the bus.
+     */
+    private fun getNextStopLatLng(currentLatLng: LatLng): LatLng? {
+        val stops: List<StopsItem> = tripsData?.stops ?: return null
+        var minDistance = Float.MAX_VALUE
+        var nextStop: StopsItem? = null
+
+        stops.forEach { stop ->
+            val stopLat = stop.lat
+            val stopLng = stop.lng
+            if (stopLat != null && stopLng != null) {
+                val stopLatLng = LatLng(stopLat, stopLng)
+                val distance = distanceBetween(currentLatLng, stopLatLng)
+                if (distance < minDistance) {
+                    minDistance = distance
+                    nextStop = stop
+                }
+            }
+        }
+
+        return if (nextStop?.lat != null && nextStop?.lng != null) {
+            LatLng(nextStop!!.lat!!, nextStop!!.lng!!)
+        } else null
+    }
+
+    /**
+     * Fetch and draw route only from current location to the "next" stop.
+     * This hides the polyline for previous stops / full route to keep focus ahead.
+     */
+    private fun fetchAndDrawRouteToNextStop(currentLatLng: LatLng) {
+        val nextStopLatLng = getNextStopLatLng(currentLatLng) ?: return
+
+        val url = "https://maps.googleapis.com/maps/api/directions/json" +
+                "?origin=${currentLatLng.latitude},${currentLatLng.longitude}" +
+                "&destination=${nextStopLatLng.latitude},${nextStopLatLng.longitude}" +
+                "&mode=driving" +
+                "&departure_time=now" +
+                "&key=$GOOGLE_MAPS_API_KEY"
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val client = OkHttpClient()
+                val request = Request.Builder().url(url).build()
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful) {
+                    val body = response.body?.string()
+                    val json = JSONObject(body)
+                    val routesArray = json.getJSONArray("routes")
+                    if (routesArray.length() > 0) {
+                        val routeObj = routesArray.getJSONObject(0)
+                        val overviewPolyline =
+                            routeObj.getJSONObject("overview_polyline").getString("points")
+                        val legs = routeObj.getJSONArray("legs")
+                        var totalDurationSeconds = 0
+                        var totalTrafficSeconds = 0
+                        for (i in 0 until legs.length()) {
+                            val leg = legs.getJSONObject(i)
+                            val duration = leg.getJSONObject("duration")
+                            totalDurationSeconds += duration.getInt("value")
+
+                            val durationInTraffic =
+                                leg.optJSONObject("duration_in_traffic")?.optInt("value")
+                            totalTrafficSeconds += durationInTraffic ?: duration.getInt("value")
+                        }
+                        val totalDurationMinutes = totalDurationSeconds / 60
+                        val etaText = "ETA: $totalDurationMinutes mins"
+
+                        val trafficRatio =
+                            if (totalDurationSeconds > 0) totalTrafficSeconds.toFloat() / totalDurationSeconds.toFloat()
+                            else 1f
+                        val trafficColor = getTrafficColor(trafficRatio)
+
+                        val newRoutePoints: List<LatLng> = PolyUtil.decode(overviewPolyline)
+                        withContext(Dispatchers.Main) {
+                            if (newRoutePoints.isNotEmpty()) {
+                                routePoints = newRoutePoints
+                                // Clear map so that only the segment to next stop is visible
+                                drawRouteOnMap(newRoutePoints, true, trafficColor)
+                                tvEta.text = etaText
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("BusRoutesActivity", "fetchAndDrawRouteToNextStop: Error=${e.localizedMessage}")
+            }
+        }
+    }
+
     private fun getBearing(from: LatLng, to: LatLng): Float {
         val lat1 = Math.toRadians(from.latitude)
         val lon1 = Math.toRadians(from.longitude)

@@ -9,7 +9,8 @@ object AppConstants {
     const val NA = "N/A"
 
     // 🔹 Local PC server ka URL (Emulator ke liye)
-    const val BASE_URL = "http://13.48.236.133:5000/api/"// chal raha hai to emulator me 10.0.2.2 use hoga
+    const val BASE_URL =
+        "http://51.21.185.70:5000/api/" //YOU BASE URL// chal raha hai to emulator me 10.0.2.2 use hoga
    // const val BASE_URL = "http://13.48.236.133/"
 
     // Agar future me mobile device (real phone) pe test karna ho to IP wapas change kar lena
@@ -40,6 +41,8 @@ object AppConstants {
     var DRIVER_ANGLE = "DRIVER_ANGLE"
     var IS_BOOKING_ASSIGNED = "IS_BOOKING_ASSIGNED"
     var IS_TRIP_STARTED = "IS_TRIP_STARTED"
+    // Flag to indicate that at least one passenger has been onboarded for current trip
+    var IS_PASSENGER_ONBOARDED = "IS_PASSENGER_ONBOARDED"
     var DEVICE_TYPE = 1 //1 for Android and 2 for iOS
     var COMMON_DATA = "COMMON_DATA"
     var DRIVER_STATUS = "DRIVER_STATUS"
