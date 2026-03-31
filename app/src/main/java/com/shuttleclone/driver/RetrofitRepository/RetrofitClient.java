@@ -1,7 +1,10 @@
 package com.shuttleclone.driver.RetrofitRepository;
 
+import android.util.Log;
 import com.shuttleclone.driver.Util.AppConstants;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -15,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static Retrofit retrofit = null;
+    private static final String TAG = "RetrofitClient";
 
     public static ApiCalls getClient() {
 
@@ -24,6 +28,36 @@ public class RetrofitClient {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
+            
+            // Error sanitization interceptor
+            httpClientBuilder.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    Request request = chain.request();
+                    try {
+                        return chain.proceed(request);
+                    } catch (UnknownHostException e) {
+                        // Network not available
+                        Log.e(TAG, "Network error: No internet connection");
+                        throw new IOException("No internet connection available");
+                    } catch (SocketTimeoutException e) {
+                        // Request timeout
+                        Log.e(TAG, "Network error: Request timeout");
+                        throw new IOException("Request timeout. Please try again");
+                    } catch (IOException e) {
+                        // Other IO errors - sanitize message
+                        String message = e.getMessage();
+                        if (message != null && (message.contains("51.21.185.70") || 
+                            message.contains("Failed to connect to"))) {
+                            Log.e(TAG, "Network error: Connection failed");
+                            throw new IOException("Connection failed. Please check your internet");
+                        }
+                        throw e;
+                    }
+                }
+            });
+            
+            // Header interceptor
             httpClientBuilder.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
@@ -33,6 +67,7 @@ public class RetrofitClient {
                     return chain.proceed(requestBuilder.build());
                 }
             });
+            
             httpClientBuilder.addInterceptor(httpLoggingInterceptor);
 
 

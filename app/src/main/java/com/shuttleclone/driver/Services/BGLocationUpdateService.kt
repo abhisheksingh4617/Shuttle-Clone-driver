@@ -72,8 +72,21 @@ class BGLocationUpdateService : Service() {
             LiveUpdate.updateLocation.postValue(location)
             savePreference(this, AppConstants.DRIVER_LATITUDE, location.latitude.toString())
             savePreference(this, AppConstants.DRIVER_LONGITUDE, location.longitude.toString())
-            savePreference(this, AppConstants.DRIVER_ANGLE, location.bearing.toString())
-            myLog(TAG, "onLocationUpdated: angle=${getPreference(this, AppConstants.DRIVER_ANGLE)}")
+            
+            // Ensure bearing is valid - if not, calculate from previous location
+            var bearing = location.bearing
+            if (!location.hasBearing() || bearing == 0f) {
+                val prevLat = getPreference(this, AppConstants.DRIVER_LATITUDE)?.toDoubleOrNull() ?: 0.0
+                val prevLng = getPreference(this, AppConstants.DRIVER_LONGITUDE)?.toDoubleOrNull() ?: 0.0
+                if (prevLat != 0.0 && prevLng != 0.0) {
+                    // Calculate bearing from previous location
+                    val results = FloatArray(1)
+                    Location.distanceBetween(prevLat, prevLng, location.latitude, location.longitude, results)
+                    bearing = results[0]
+                }
+            }
+            savePreference(this, AppConstants.DRIVER_ANGLE, bearing.toString())
+            myLog(TAG, "onLocationUpdated: angle=${bearing}")
 
 
             if (!isLocationSet) {

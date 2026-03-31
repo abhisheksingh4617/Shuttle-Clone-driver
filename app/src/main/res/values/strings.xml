@@ -84,6 +84,13 @@
 
     <string name="lbl_profile">Profile</string>
     <string name="something_wrong">Please try again, Something went wrong.</string>
+    
+    <!-- Network Error Messages -->
+    <string name="error_no_internet">No internet connection. Please check your network settings.</string>
+    <string name="error_timeout">Request timeout. Please check your internet connection and try again.</string>
+    <string name="error_network">Network error. Please check your connection and try again.</string>
+    <string name="error_something_wrong">Something went wrong. Please try again later.</string>
+    
     <string name="lbl_allow">Allow</string>
     <string name="lbl_no_trips_available">No Trips Available</string>
     <string name="title_stops">Bus Stops</string>

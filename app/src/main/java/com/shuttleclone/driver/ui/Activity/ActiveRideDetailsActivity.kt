@@ -299,13 +299,50 @@ class ActiveRideDetailsActivity : BaseActivity(), ToolTipView.OnToolTipViewClick
 
     private fun navigateRide() {
         try {
-            val intent = Intent(this, BusRoutesActivity::class.java)
-            val bundle = Bundle()
-            bundle.putSerializable("tripsData", tripsData)
-            intent.putExtras(bundle)
-            startActivity(intent)
+            // Open Google Maps with all stops as waypoints
+            val stops = tripsData?.stops
+            if (stops.isNullOrEmpty()) {
+                toast(this, "No stops available")
+                return
+            }
+
+            // Build Google Maps URL with origin, destination and waypoints
+            val origin = "${stops.first().lat},${stops.first().lng}"
+            val destination = "${stops.last().lat},${stops.last().lng}"
+            
+            // Add middle stops as waypoints
+            val waypoints = if (stops.size > 2) {
+                stops.drop(1).dropLast(1).joinToString("|") { stop ->
+                    "${stop.lat},${stop.lng}"
+                }
+            } else {
+                ""
+            }
+
+            // Build Google Maps navigation URL
+            val uri = if (waypoints.isNotEmpty()) {
+                "https://www.google.com/maps/dir/?api=1&origin=$origin&destination=$destination&waypoints=$waypoints&travelmode=driving"
+            } else {
+                "https://www.google.com/maps/dir/?api=1&origin=$origin&destination=$destination&travelmode=driving"
+            }
+
+            myLog(TAG, "Opening Google Maps with URI: $uri")
+
+            // Try to open in Google Maps app first, fallback to browser
+            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(uri))
+            intent.setPackage("com.google.android.apps.maps")
+            
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            } else {
+                // Fallback to browser if Google Maps not installed
+                intent.setPackage(null)
+                startActivity(intent)
+            }
+            
         } catch (e: Exception) {
             myLog(TAG, "navigateRide: Error=${e.localizedMessage}")
+            toast(this, "Error opening Google Maps")
         }
     }
 

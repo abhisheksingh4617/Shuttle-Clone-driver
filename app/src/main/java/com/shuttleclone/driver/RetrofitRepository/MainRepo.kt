@@ -34,6 +34,13 @@ class MainRepo(val application: Application) {
     val updateLanguage : MutableLiveData<DefaultResponse?> by lazy { MutableLiveData() }
 
     private val apiClient :ApiCalls by lazy { RetrofitClient.getClient() }
+    
+    /**
+     * Helper function to get user-friendly error message
+     */
+    private fun getErrorMessage(error: Throwable): String {
+        return NetworkErrorHandler.getErrorMessage(application, error)
+    }
 
     @Suppress("NullSafeMutableLiveData")
     fun driverLogin(phoneNo: String, countryCode: String, countryDetails: String) {
@@ -48,8 +55,8 @@ class MainRepo(val application: Application) {
                 }
 
                 override fun onError(e: Throwable) {
-                    myLog(TAG, "driverLogin->${e.localizedMessage}")
-                    loginData?.value = DriverLoginResponseModel(errorResponse =  ErrorResponse(e.localizedMessage,true))
+                    myLog(TAG, "driverLogin->${NetworkErrorHandler.getSanitizedLogMessage(e)}")
+                    loginData?.value = DriverLoginResponseModel(errorResponse = ErrorResponse(getErrorMessage(e), true))
                 }
             })
     }
@@ -66,14 +73,14 @@ class MainRepo(val application: Application) {
                 }
 
                 override fun onError(e: Throwable) {
-                    myLog(TAG, "verifyOTP->${e.localizedMessage}")
+                    myLog(TAG, "verifyOTP->${NetworkErrorHandler.getSanitizedLogMessage(e)}")
 
                     if (e.localizedMessage.equals(AppConstants.Unauthorized)||e.localizedMessage.equals(AppConstants.Forbidden))
                         checkToken(application, ApiCallBack { success ->
                             if (success) verifyOTP(getPreference(application, AppConstants.TOKEN)!!, deviceToken,otp,isMobileVerified)
                             else otpVerify?.value = null
                         })
-                    else otpVerify?.value = DriverVerifyResponseModel(errorResponse =  ErrorResponse(e.localizedMessage,true))
+                    else otpVerify?.value = DriverVerifyResponseModel(errorResponse = ErrorResponse(getErrorMessage(e), true))
 
                 }
 
@@ -91,13 +98,13 @@ class MainRepo(val application: Application) {
                 }
 
                 override fun onError(e: Throwable) {
-                    myLog(TAG, "resendOtp->${e.localizedMessage}")
+                    myLog(TAG, "resendOtp->${NetworkErrorHandler.getSanitizedLogMessage(e)}")
                     if (e.localizedMessage.equals(AppConstants.Unauthorized)||e.localizedMessage.equals(AppConstants.Forbidden))
                         checkToken(application, ApiCallBack { success ->
                             if (success) resendOtp(getPreference(application, AppConstants.TOKEN)!!, phone,countryCode,countryDetails)
                             else reSendOtp?.value = null
                         })
-                    else reSendOtp?.value = DefaultResponse(e.localizedMessage,0,false)
+                    else reSendOtp?.value = DefaultResponse(getErrorMessage(e),0,false)
 
                 }
 
